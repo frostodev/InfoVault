@@ -1,0 +1,4 @@
+Backtracking: 2016
+Greedy (primera heurística): 1766
+Greedy (segunda heurística): 1865
+Programación dinámica: 2016

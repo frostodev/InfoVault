@@ -1,0 +1,4 @@
+Backtracking (no ejecutado!): 0
+Greedy (primera heurística): 892862885
+Greedy (segunda heurística): -720114444
+Programación dinámica: -792247920

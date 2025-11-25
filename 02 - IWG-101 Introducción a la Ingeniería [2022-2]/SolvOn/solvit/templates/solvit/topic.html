@@ -1,0 +1,23 @@
+{% extends "solvit/main.html" %}
+
+{% block title %}
+{% for excercise in ex_list|slice:":1" %}
+<title>SolvOn | {{ excercise.get_topic }}</title>
+{% endfor %}
+{% endblock %}
+
+{% block page_content %}
+<body>
+    {% for excercise in ex_list|slice:":1" %}
+        <h2>{{ excercise.get_topic }}</h2>
+    {% endfor %}
+    <button onclick="history.back()">Volver al ramo</button>
+    <ul>
+        {% for excercise in ex_list %}
+            <img src="{{ excercise.excersise }}">
+            <br>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ excercise.excersise_video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {% endfor %}
+    </ul>
+</body>
+{%endblock%}

@@ -1,0 +1,3 @@
+Sergio Carcamo, -, paralelo 203, Implemento los metodos de ambos TDA.
+Martin Ferrera, -, paralelo 203, Implemento la funcion main en el 2do ejercicio y comento el ejecicio completo.
+Sebastian Albornoz, -, paralelo 203,Implemento la funcion main en el 1er ejercicio y comento el ejecicio completo.

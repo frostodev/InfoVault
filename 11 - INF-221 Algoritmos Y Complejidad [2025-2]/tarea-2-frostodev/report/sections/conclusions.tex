@@ -1,0 +1,13 @@
+Este trabajo implementó y comparó experimentalmente cuatro enfoques algorítmicos para un problema de optimización de particionamiento. El análisis de los resultados nos permite responder a la pregunta de investigación sobre el balance entre la optimalidad y la eficiencia.
+
+\begin{itemize}
+	\item \textbf{La Fuerza Bruta (Backtracking) es inviable en la práctica.} A pesar de garantizar la solución óptima, su complejidad temporal exponencial ($O(n \cdot 2^n)$) la vuelve computacionalmente intratable para entradas que superen $n \approx 30$ empleados, como demostró la curva de crecimiento vertical en el gráfico de tiempo (Figura 1).
+	
+	\item \textbf{Las heurísticas Greedy son rápidas pero incorrectas.} Los dos algoritmos greedy (Maximizar Segmento y Maximizar Densidad) demostraron ser rápidos, con un rendimiento polinomial $O(n^3)$ similar al de la Programación Dinámica. Sin embargo, el análisis de calidad (Figura 3) reveló que \textbf{no garantizan la optimalidad} y, de hecho, sus soluciones son erráticas y a menudo se desvían significativamente del valor óptimo.
+	
+	\item \textbf{La Programación Dinámica es la única solución óptima y eficiente.} El enfoque DP es el único que logra el balance deseado: encuentra la \textbf{solución óptima garantizada} en un tiempo polinomial ($O(n^3)$), permitiendo resolver el problema para $n$ grandes.
+	
+	\item \textbf{El costo de la optimalidad es la memoria.} El principal trade-off de la solución de Programación Dinámica no es el tiempo (comparte el $O(n^3)$ con las heurísticas), sino el \textbf{consumo de memoria}. Los gráficos (Figura 2) mostraron que su uso de memoria crece a un ritmo superior (posiblemente $O(n^2)$ debido al almacenamiento de subproblemas) en comparación con el crecimiento lineal ($O(n)$) de los otros tres algoritmos.
+\end{itemize}
+
+En definitiva, se comprueba que para este problema, la Programación Dinámica es el único método robusto, superando la inviabilidad de la fuerza bruta y la incorrección de las heurísticas greedy.

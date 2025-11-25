@@ -1,0 +1,353 @@
+\documentclass[letterpaper, 12pt]{article}
+\usepackage[spanish, es-tabla]{babel} %%Paquete español para mac
+\usepackage[utf8]{inputenc} %% Para unicode
+\usepackage{graphicx} %% Para incluir figuras
+\usepackage{ifpdf}
+\usepackage[table]{xcolor}
+\usepackage{xcolor}
+\usepackage{ amssymb }
+\DeclareGraphicsExtensions{.pdf}
+\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage[all]{xy}
+\setcounter{totalnumber}{5}
+\renewcommand{\textfraction}{0.1}
+\usepackage[cmex10]{amsmath}
+\usepackage{amsmath}
+\usepackage{diagbox} % Para la celda con la diagonal
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{esvect}
+\decimalpoint
+\usepackage{url}
+\graphicspath{imagenes/}
+\usepackage{hyperref}
+\usepackage{biblatex} 
+\usepackage{csquotes}
+\addbibresource{Citas.bib}
+\hypersetup{colorlinks=false,bookmarksopen=true,linkbordercolor={1 1 1}}
+\usepackage{subcaption}
+\definecolor{lightyellow}{RGB}{255, 255, 153}
+
+\usepackage{enumerate} 
+\setlength{\parindent}{0pt}
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%   ENCABEZADO  %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace*{-1cm}
+\includegraphics[width=2.2cm]{logo_usm.png}
+\vspace*{-1.8cm}
+
+\hspace*{2cm}
+ \begin{tabular}{l}
+  {\ Universidad Técnica Federico Santa María}\\
+  {\ Departamento de Informática}\\
+  {\ INF245 - Arquitectura y Organización de Computadores}\
+ \end{tabular}
+ \hfill 
+\vspace*{5mm}
+\begin{center}
+{\LARGE\bf Laboratorio 2}\\
+\vspace*{2.5mm}
+\today\\
+Jose Ignacio Valenzuela - Jose.valenzuelavo@usm.cl - 202273635-6\\
+
+Sergio Cárcamo Naranjo - sergio.carcamon@usm.cl - 202273512-0\\
+\end{center}
+\hrule\vspace*{2pt}\hrule
+
+\setlength{\parindent}{0pt}
+% ***********************************************
+% ***********************************************
+\vspace*{15pt}
+\section{Resumen}
+En este laboratorio se diseñó un circuito combinacional utilizando \textit{Logisim}, cuyo objetivo es representar en un display de 7 segmentos el tratamiento médico asignado a pacientes en 16 habitaciones diferentes de un hospital. Este problema fue planteado como parte del desafío del Doctor Haus, y busca integrar conocimientos de lógica digital, mapas de Karnaugh y diseño de circuitos.
+
+Cada habitación está identificada por una dirección de 4 bits, lo que permite consultar individualmente a cada paciente. Según el diagnóstico o tratamiento requerido, el circuito entrega un símbolo específico mediante un display de 7 segmentos. El desarrollo de este laboratorio permite profundizar en la implementación de lógica combinacional de manera optimizada.
+
+\section{Entradas, salidas y supuestos}
+
+\textbf{Entradas:} la entrada al sistema de lógica combinacional es un bus de 4 bits que identifica la habitación de la cual se quiere conocer el estado del paciente.\\
+
+\textbf{Salidas:} la salida del sistema de lógica combinacional es un bus de 7 bits que corresponde a combinaciones que se despliegan en un display de 7 segmentos para identificar el estado del paciente que está en la habitación cuyo número se ingresó en la entrada.\\
+
+\textbf{Supuestos:} 
+\begin{enumerate}
+    \item Estados: el sistema es estático, es decir, el estado de los pacientes en las habitaciones no cambia en el tiempo por lo que solo existe una asignación combinacional entrada-salida.
+    \item Validez de la entrada: no se consideraron entradas inválidas, es decir, el sistema siempre espera una entrada de exactamente 4 bits bien definidos (0-1).
+    \item Encendido del sistema: se consideró un sistema siempre activo, sin set-reset.
+\end{enumerate}
+
+\section{Diccionario de correspondencia}
+
+Tal como se explicó anteriormente, cada habitación tiene un paciente y cada paciente tiene y cada paciente tiene un estado de salud asociado a un binario de 7 bits.
+
+\subsection{Tabla Habitaciones - Pacientes}
+A continuación se muestra la tabla de habitaciones y acciones de pacientes según enunciado. En este contexto se asocia el número de habitación a la entrada de 4 bits:
+\begin{center}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    Habitación (decimal) & Habitación (binario) & Estado paciente\\
+
+\hline 0 & 0000 & Rayos X \\
+\hline 1 & 0001 & Lupus \\
+\hline 2 & 0010 & Observación \\
+\hline 3 & 0011 & Ecografía \\
+\hline 4 & 0100 & Punción lumbar \\
+\hline 5 & 0101 & Urgencia \\
+\hline 6 & 0110 & Fiebre \\
+\hline 7 &0111 & Rayos X \\
+\hline 8 & 1000 & Análisis diferencial \\
+\hline 9 & 1001 &Biopsia\\
+\hline 10 & 1010 & Sarcoidosis \\
+\hline 11 & 1011 & Electrocardiograma \\
+\hline 12 & 1100 & Ecografía \\
+\hline 13 & 1101 & Coronavirus \\
+\hline 14 & 1110 & Punción Lumbar \\
+\hline 15 & 1111& Observación \\
+\hline
+    \end{tabular}
+\end{center}
+\subsubsection{Tabla Estados Pacientes - salida 7 Bits}
+
+Para hacer la tabla de estados pacientes versus salida de 7 bits es necesario hacer una asignación de bits a leds en el display de 7 segmentos.
+
+Típicamente un display de 7 segmentos enumera los LED según la configuración que se muestra a continuación, acompañado del diagrama de conexiones que también se utiliza en \textit{Logisim}.
+\begin{center}
+\includegraphics[width=4.2cm]{7seg.png}
+\end{center}
+Al hacer pruebas en \textit{Logisim} es posible notar que cuando en uno de los pines del display hay un 1 lógico, el led asociado a este pin se enciende\footnote{Esto es curioso porque los display físicos reales suelen ser de ánodo común, lo que significa que los led se prenden en el 0 lógico y se apagan en el 1 lógico, pero afortunadamente \textit{Logisim} nos salva de esta contra intuitividad}. Esto se puede observar en la imagen a continuación, donde se hace una prueba encendiendo el led \textit{e} del display conectandolo a una fuente de poder.
+\begin{center}
+\includegraphics[width=5cm]{prueba_led_logisim.png}
+\end{center}
+Con esto, y observando el diccionario de asignaciones es posible hacer una tabla de salidas de 7 bits asociadas a las posibles entradas.
+
+A continuación se muestran los valores de salidas de 7 bits asociados a las configuraciones del display para las posibles salidas a mostrar:
+\begin{enumerate}
+    \item Procedimientos:
+    \begin{center}
+\includegraphics[width=12cm]{7_seg_procedimeintos.png}
+\end{center}
+\item Enfermedades:
+\begin{center}
+\includegraphics[width=12cm]{7_seg_enfermedades.png}
+\end{center}
+\end{enumerate}
+
+Esto se traduce en una asignación de la siguiente forma:
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+     \hline
+     Enfermedad/Procedimiento&a&b&c&d&e&f&g\\
+     \hline
+     Punción Lumbar & 1&1&0&0&1&1&1\\
+     \hline
+     Análisis Diferencial & 1&1&1&0&1&1&1\\
+     \hline
+     Biopsia & 1&1&1&1&1&1&1\\
+     \hline
+     Electrocardiograma & 0&1&1&0&1&1&0\\
+     \hline
+     Rayos X & 0&1&1&0&1&1&1\\
+     \hline
+     Ecografía & 1&0&0&1&1&1&1\\
+     \hline
+     Fiebre & 1&0&0&0&1&1&1\\
+     \hline
+     Observación & 1&1&1&1&1&1&0\\
+     \hline
+     Urgencia & 0 & 1 & 1&1&1&1&0\\
+     \hline
+     Lupus & 0&0&0&1&1&1&0\\
+     \hline
+     Sacroidosis & 1&0&1&1&0&1&1\\
+     \hline
+     Coronavirus & 1&0&0&1&1&1&0\\
+     \hline
+    \end{tabular}
+\end{center}
+Con esta información se puede crear la tabla de verdad general.
+\section{Tabla de verdad general}
+Combinando la información antes expuesta se llega a la siguiente tabla, donde A B C D son los bits de la entrada del mas significativo al menos significativo.
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+A&B&C&D&a&b&c&d&e&f&g\\
+\hline
+
+\hline 0 & 0 & 0 &  0 & 0 & 1 & 1 & 0 & 1 & 1 & 1 \\
+
+\hline 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 1 & 1  & 0 \\
+\hline
+0 & 0 & 1 & 0  & 1 & 1 & 1 & 1 & 1 & 1 & 0 \\
+\hline0 & 0 & 1 & 1  & 1 & 0 & 0 & 1 & 1 & 1 & 1 \\
+\hline0 & 1 & 0 & 0  & 1 & 1 & 0 & 0 & 1 & 1 & 1 \\
+\hline0 & 1 & 0 & 1  & 0 & 1 & 1 & 1 & 1 & 1 & 0 \\
+\hline 0 & 1 & 1 & 0  & 1 & 0 & 0 & 0 & 1 & 1 & 1 \\
+\hline0 & 1 & 1 & 1  & 0 & 1 & 1 & 0 & 1 & 1 & 1 \\
+\hline1 & 0 & 0 & 0  & 1 & 1 & 1 & 0 & 1 & 1 & 1 \\
+\hline1 & 0 & 0 & 1  & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+\hline1 & 0 & 1 & 0  & 1 & 0 & 1 & 1 & 0 & 1 & 1 \\
+\hline1 & 0 & 1 & 1  & 0 & 1 & 1 & 0 & 1 & 1 & 0 \\
+\hline1 & 1 & 0 & 0  & 1 & 0 & 0 & 1 & 1 & 1 & 1 \\
+\hline1 & 1 & 0 & 1  & 1 & 0 & 0 & 1 & 1 & 1 & 0 \\
+\hline1 & 1 & 1 & 0  & 1 & 1 & 0 & 0 & 1 & 1 & 1 \\
+\hline1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0\\
+\hline
+
+\end{tabular}
+\end{center}
+\section{Mapas de Karnaugh y Ecuaciones Booleanas por salida}
+A continuación se crean los mapas de Karnaugh por bit de salida para calcular cada ecuación booleana asociada. Para todos los Mapas de Karnaugh se usó el orden de Grey y se usaron grupos de unos.
+\begin{enumerate}
+    \item Mapa de Karnaugh y ecuación segmento a:
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+       \diagbox{AB}{CD} & 00 & 01 & 11 & 10 \\
+\hline
+00 & 0  & 0  & \cellcolor{yellow}1 & \cellcolor{yellow}1 \\
+\hline
+01 & \cellcolor{yellow}1  & 0  & 0  & \cellcolor{yellow}1 \\
+\hline
+11 & \cellcolor{yellow}1  & \cellcolor{yellow}1  & \cellcolor{yellow}1  & \cellcolor{yellow}1 \\
+\hline
+10 & \cellcolor{yellow}1  & \cellcolor{yellow}1  & 0  & \cellcolor{yellow}1 \\
+\hline
+\end{tabular}
+\end{center}
+
+La ecuación asociada es:
+$$
+a = \bar{A} \bar{B} C+C \bar{D}+A \bar{C}+B \bar{C} \bar{D}+A B
+$$
+    \item Mapa de Karnaugh y ecuación segmento b:
+    \begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\diagbox{AB}{CD} & 00 & 01 & 11 & 10 \\
+\hline 00 & \cellcolor{yellow}1 & 0 & 0 & \cellcolor{yellow}1 \\
+\hline 01 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & 0 \\
+\hline 11 & 0 & 0 & \cellcolor{yellow}1 & \cellcolor{yellow}1 \\
+\hline 10 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & 0 \\
+\hline
+\end{tabular}
+    \end{center}
+    La ecuación asociada es:
+    $$
+b = \bar{A} \bar{B} \bar{D}+\bar{A} B \bar{C}+B C D+A B C+A C D+A \bar{B} \bar{C}
+    $$
+    \item Mapa de Karnaugh y ecuación segmento c:
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+\diagbox{AB}{CD} & 00 & 01 & 11 & 10 \\
+\hline 00 & \cellcolor{yellow}1 & 0 & 0 & \cellcolor{yellow}1 \\
+\hline 01 & 0 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & 0 \\
+\hline 11 & 0 & 0 & \cellcolor{yellow}1 & 0 \\
+\hline 10 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1\\
+\hline
+\end{tabular}
+    \end{center}
+    La ecuación asociada es:
+$$
+c = \bar{A} \bar{B} \bar{D}+\bar{A} B D+A C D+A \bar{B}
+$$
+    \item Mapa de Karnaugh y ecuación segmento d:
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+\hline
+\diagbox{AB}{CD} & 00 & 01 & 11 & 10 \\
+\hline 00 & 0 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 \\
+\hline 01 & 0 & \cellcolor{yellow}1 & 0 & 0 \\
+\hline 11 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & 0 \\
+\hline 10 & 0 & \cellcolor{yellow}1 & 0 & \cellcolor{yellow}1 \\
+\hline
+\end{tabular}
+    \end{center}
+
+    La ecuación asociada es: 
+    $$
+d = \bar{C} D+\bar{A} \bar{B} C+A \bar{B} C \bar{D}+A B C D+A B \bar{C} \bar{D}
+    $$
+    \item Mapa de Karnaugh y ecuación segmento e:
+
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+\diagbox{AB}{CD} & 00 & 01 & 11 & 10 \\
+\hline 00 &\cellcolor{yellow} 1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 \\
+\hline 01 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 \\
+\hline 11 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 \\
+\hline 10 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & 0 \\
+\hline
+\end{tabular}
+
+    \end{center}
+    La ecuación asociada es:
+$$
+e = \bar{A}+B+\bar{C}+D
+$$
+    \item Mapa de Karnaugh y ecuación segmento f:
+    \begin{center}
+        \begin{tabular}{|l|l|l|l|l|}
+\hline
+\diagbox{AB}{CD} & 00 & 01 & 11 & 10 \\
+\hline 00 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 \\
+\hline 01 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 \\
+\hline 11 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 \\
+\hline 10 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & \cellcolor{yellow}1 \\
+\hline
+\end{tabular}
+    \end{center}
+    La ecuación asociada es:
+    $$
+f = A+\bar{A}
+    $$
+    \item Mapa de Karnaugh y ecuación segmento g:
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+\diagbox{AB}{CD} & 00 & 01 & 11 & 10 \\
+\hline 00 & \cellcolor{yellow}1 & 0 & \cellcolor{yellow}1 & 0 \\
+\hline 01 & \cellcolor{yellow}1 & 0 & \cellcolor{yellow}1 & \cellcolor{yellow}1 \\
+\hline 11 & \cellcolor{yellow}1 & 0 & 0 & \cellcolor{yellow}1 \\
+\hline 10 & \cellcolor{yellow}1 & \cellcolor{yellow}1 & 0 & \cellcolor{yellow}1 \\
+\hline
+\end{tabular}
+    \end{center}
+    La ecuación asociada es:
+    $$
+g = \bar{C}\bar{D} + \bar{A}BC + AC\bar{D}+A\bar{B}\bar{C}D
+    $$
+\end{enumerate}
+
+\section{Simulaciones en \textit{Logisim}}
+
+A continuación, algunas simulaciones de consultas.
+    \item
+
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{0000.png}
+    \caption{Paciente 0 (Mark Grayson, Rayos X)}
+    \end{figure}
+
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{0100.png}
+    \caption{Paciente 4 (Marisa Kirisame, Punción Lumbar)}
+    \end{figure}
+
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{1000.png}
+    \caption{Paciente 8 (Bruja Lunar Ranni, Análisis Diferencial)}
+    \end{figure}
+
+\section{Conclusiones}
+
+Basado en los resultados de este informe, podemos concluir que, en efecto, se puede implementar un sistema de lógica combinacional que permita transmitir información de los pacientes y sus tratamientos, estados y diagnósticos sólo a través de un display de 7 segmentos, por lo que tanto como los primos y el Doctor Haus estarán contentos.
+
+\end{document}

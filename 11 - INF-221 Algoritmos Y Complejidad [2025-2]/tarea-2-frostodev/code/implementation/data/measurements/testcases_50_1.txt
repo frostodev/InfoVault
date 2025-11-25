@@ -1,0 +1,4 @@
+Backtracking (no ejecutado!): 0.000115451 segundos, 0 KB de memoria
+Greedy (primera heurística): 0.000565952 segundos, 1889 KB de memoria
+Greedy (segunda heurística): 0.00166307 segundos, 2700 KB de memoria
+Programación dinámica: 0.00970476 segundos, 25500 KB de memoria

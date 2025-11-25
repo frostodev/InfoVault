@@ -1,0 +1,5 @@
+quicksort: 7.345e-05 segundos, 0 KB de memoria
+mergesort: 0.000434309 segundos, 0 KB de memoria
+pandasort: 0.0007176 segundos, 0 KB de memoria
+insertionsort: 0.00308555 segundos, 0 KB de memoria
+stlsort: 0.000130108 segundos, 0 KB de memoria

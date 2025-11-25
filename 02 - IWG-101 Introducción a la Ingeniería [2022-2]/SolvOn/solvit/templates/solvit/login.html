@@ -1,0 +1,13 @@
+{% extends 'solvit/main.html' %}
+{% load static %}
+{% block page_content %}
+<div class="container jumbotron">
+    <form method="POST" action="">
+        {% csrf_token %}
+        <p><input type="text" name="username" placeholder="Nombre de usuario..."></p>
+        <p><input type="password" name="password" placeholder="Contraseña..." ></p>
+        <input class="btn btn-success" type="submit" value="Iniciar sesión">
+        <p>¿No tienes una cuenta? <a href="{% url 'solvit:register' %}">Registrarse</a></p>
+    </form>
+</div>
+{% endblock %}

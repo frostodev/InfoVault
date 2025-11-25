@@ -1,0 +1,34 @@
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|l|c|c|c|}
+		\hline
+		\textbf{Algoritmo}     & \textbf{Ascendente} & \textbf{Descendente} & \textbf{Aleatorio (Promedio)} \\
+		\hline
+		\textbf{MergeSort}     & \(O(n \log n)\)     & \(O(n \log n)\)      & \(O(n \log n)\)               \\
+		\textbf{QuickSort}     & \(O(n \log n)^{\dagger}\) & \(O(n^2)\)     & \(O(n \log n)\)               \\
+		\textbf{std::sort}     & \(O(n \log n)\)     & \(O(n \log n)\)      & \(O(n \log n)\)               \\
+		\textbf{PandaSort}     & \(O(n \sqrt{n})\)   & \(O(n \sqrt{n})\)    & \(O(n \sqrt{n})\)             \\
+		\textbf{InsertionSort} & \(O(n)\)           & \(O(n^2)\)           & \(O(n^2)\)                    \\
+		\hline
+	\end{tabular}
+	\caption{Complejidad temporal de algoritmos de ordenamiento según el orden inicial del arreglo.}
+	\label{tab:complejidad_ordenamiento}
+\end{table}
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|l|c|c|c|}
+		\hline
+		\textbf{Algoritmo} & \textbf{Mejor Caso} & \textbf{Peor Caso} & \textbf{Caso Promedio} \\
+		\hline
+		\textbf{Naive}     & \(O(n^3)\)          & \(O(n^3)\)          & \(O(n^3)\)              \\
+		\textbf{Strassen}  & \(O(n^{\log_2 7})\) & \(O(n^{\log_2 7})\) & \(O(n^{\log_2 7})\)     \\
+		\hline
+	\end{tabular}
+	\caption{Complejidad temporal de algoritmos de multiplicación de matrices.}
+	\label{tab:complejidad_multiplicacion_matrices}
+\end{table}
+
+\vspace{2mm}
+\noindent
+\footnotesize{\(^{\dagger}\) Depende del método de selección de pivote. En el peor caso (pivote mal elegido), QuickSort puede degradarse a \(O(n^2)\).}

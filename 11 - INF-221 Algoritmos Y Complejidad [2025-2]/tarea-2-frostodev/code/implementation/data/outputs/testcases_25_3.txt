@@ -1,0 +1,4 @@
+Backtracking: 6353
+Greedy (primera heurística): 3648
+Greedy (segunda heurística): 5576
+Programación dinámica: 6353

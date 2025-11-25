@@ -1,0 +1,40 @@
+\subsubsection{Explicación}
+
+La estrategia de fuerza bruta para este problema consiste en explorar todas las particiones posibles de la fila de $n$ empleados en equipos contiguos no vacíos. Para $n$ empleados, existen $n-1$ posibles \textbf{cortes} (posiciones entre dos empleados). Cada corte puede existir o no, lo que resulta en un total de $2^{n-1}$ formas distintas de particionar la fila.
+
+El algoritmo implementado utiliza Backtracking, una técnica que construye la solución de forma recursiva. Se define una función que, dado un índice inicial start, prueba todas las combinaciones posibles para el primer equipo. Este equipo puede ser el segmento $[$start, $j]$, donde $j$ varía desde start hasta $n-1$. \\
+
+Para cada $j$ posible, el algoritmo:
+
+\begin{itemize}
+	\item Calcula la productividad del segmento $[$start, $j]$ usando la función \texttt{productividad\_equipo}.
+	\item Se llama recursivamente para encontrar la productividad máxima del resto de la fila, es decir, los empleados de $j+1$ hasta $n-1$.
+	\item Suma ambos resultados.
+	\item La función retorna el valor máximo encontrado entre todas las elecciones posibles de $j$.
+\end{itemize}
+
+\paragraph{Relación de recurrencia:}
+
+Podemos definir la solución óptima mediante una relación de recurrencia. Sea $P(i)$ la máxima productividad total que se puede obtener al formar equipos con los empleados en el segmento $[i, n-1]$ (desde el empleado $i$ hasta el final). El objetivo es calcular $P(0)$. \\
+
+La recurrencia se define como:
+$$
+P(i) = \max_{i \le j < n} \{ \text{productividad\_equipo}(i, j) + P(j+1) \}
+$$
+\begin{itemize}
+	\item \textbf{Caso Base}: $P(n) = 0$. Si no quedan empleados ($i = n$), la productividad a obtener es 0.
+	\item \textbf{Paso Recursivo}: Para encontrar la productividad máxima $P(i)$, probamos todos los puntos de corte $j$ posibles. Para cada $j$, formamos un equipo $[i, j]$ y sumamos su productividad (calculada según las reglas del enunciado ) al resultado óptimo de particionar el resto de los empleados, $P(j+1)$. Tomamos el máximo de todas estas opciones.
+\end{itemize}
+
+
+\textbf{El pseudocódigo para este algoritmo está en el apéndice.}
+
+\subsubsection{Complejidad Temporal}
+
+La complejidad temporal de este enfoque es exponencial. Analizando la recurrencia $P(i)$, vemos que para calcular $P(i)$ se realizan $n-i$ llamadas recursivas (a $P(i+1), P(i+2), \dots, P(n)$). El número total de llamadas recursivas sigue la recurrencia $T(k) = 1 + \sum_{m=1}^{k} T(k-m)$, donde $k$ es el número de empleados restantes. Esto resulta en $O(2^n)$ llamadas totales.
+
+Dentro de cada llamada \texttt{resolver\_backtracking(i, n)}, el bucle para j desde i hasta n-1 invoca a \texttt{productividad\_equipo(i, j)}. Esta función auxiliar itera sobre los $j-i+1$ elementos del segmento para calcular frecuencias y sumas. En el peor de los casos, esto toma $O(n)$ tiempo. Dado que se realizan $O(2^n)$ llamadas y cada una implica un bucle que a su vez llama a una función $O(n)$, la complejidad temporal total es $O(n \cdot 2^n)$. Esto coincide con la expectativa experimental de que el algoritmo se vuelve intratable para valores de $n$ grandes (como $n > 30$).
+
+\subsubsection{Complejidad Espacial}
+
+La complejidad espacial está determinada por la profundidad máxima de la pila de recursión. La secuencia de llamadas más profunda ocurre cuando se elige consistentemente el segmento más pequeño (de un solo empleado), por ejemplo: $P(0) \rightarrow P(1) \rightarrow P(2) \rightarrow \dots \rightarrow P(n)$. La profundidad máxima de la pila de llamadas es, por lo tanto, $n$. Cada llamada en la pila almacena variables locales (como $i$, $j$, mejor\_total). La función \texttt{productividad\_equipo} utiliza estructuras de datos (mapas) que, en el peor caso (un segmento de tamaño $n$ con $n$ lenguajes distintos), podrían ocupar $O(n)$. Sin embargo, esta memoria se libera al retornar de la función. La memoria que persiste a lo largo de la recursión es la de la pila de llamadas. Por lo tanto, la complejidad espacial es $O(n)$ para almacenar la pila de recursión.

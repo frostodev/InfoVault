@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'solvit/main.css' %}">
+
+<html>
+    {% block title %}<title>Solvon</title>{% endblock %}
+    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/992137491748499486/1040804980346585168/favicon.ico">
+    <body>
+        <div class="topnav">
+            <header>    
+                <ul>
+                    <li>
+                        <a href="{% url 'solvit:index' %}">Página Principal</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'solvit:semesters' %}">Vista Semestral</a>
+                    </li>
+                    <div class="logo-image">
+                        <img src="https://cdn.discordapp.com/attachments/1015030218899075118/1040795707042439250/image.png" width="62" height="64" alt="Solvon" class="img-fluid">
+                    </div>
+                    {% if request.user|stringformat:"s" != "AnonymousUser" %}
+                    <li>
+                        <span class="greet">Hola, {{request.user}}</span>
+                    </li>
+                    <li>
+                        <span class="greet"><a href="{% url 'solvit:logout' %}">Cerrar sesión</a></span>
+                    </li>
+                    {% else %}
+                    <li>
+                        <span class="greet">Sesión no iniciada</span>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'solvit:login' %}">Iniciar sesión</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </header>
+        </div>
+        <div class="box">
+        {% block page_content %}{%endblock%}
+        </div>
+        <div class="footer">
+        <p>(C) 2022 SolvOn</p>
+        </div>
+    </body>
+</html>

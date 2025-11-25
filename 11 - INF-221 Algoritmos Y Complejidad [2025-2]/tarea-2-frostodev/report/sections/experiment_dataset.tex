@@ -1,0 +1,31 @@
+Para realizar una comparación experimental robusta, fue necesario generar un conjunto de casos de prueba (\textit{dataset}) que evaluara sistemáticamente el rendimiento de los algoritmos bajo distintas condiciones. Siguiendo las especificaciones del Anexo A del enunciado, se implementó un script en Python, \verb|testcases_generator.py|, para crear automáticamente los archivos de entrada.
+
+El diseño de este dataset se centró en la variación de dos parámetros clave: el \textbf{cantidad de empleados ($n$)} y los \textbf{rangos de productividad ($A_i$ y $B_i$)}, manteniendo la cantidad de lenguajes constante entre cada prueba \textbf{(Python, C++, Prolog, Scheme, Java)}
+
+\subsubsection{Variación de la Cantidad de Empleados (n)}
+
+La cantidad de empleados $n$ es la variable principal para analizar la complejidad temporal y espacial. Se seleccionó un conjunto de 13 valores de $n$ con propósitos específicos:
+
+\begin{itemize}
+	\item \textbf{$n = 5, 6$}: Valores pequeños utilizados para validar la correctitud de todos los algoritmos contra los ejemplos proporcionados en el enunciado.
+	
+	\item \textbf{$n = 15, 18, 20, 25, 28, 30$}: Este rango se seleccionó específicamente para analizar el comportamiento de la solución de Fuerza Bruta. Dado que su complejidad es exponencial ($O(n \cdot 2^n)$), se esperaba que el tiempo de ejecución se volviera intratable (superando varios segundos o minutos) dentro de esta ventana. El objetivo era encontrar experimentalmente el "muro exponencial".
+	
+	\item \textbf{$n = 50, 100, 500, 1000, 5000$}: Valores de $n$ considerablemente más grandes. Son completamente inviables para la Fuerza Bruta, pero son esenciales para medir y comparar el rendimiento polinomial ($O(n^3)$) de la Programación Dinámica y las dos heurísticas Greedy. Estos valores se mantienen dentro de los límites del problema ($n < 10^4$). Cabe mencionar que \textbf{no se incluyeron casos con $n > 5000$} debido a que con el hardware actual, se tomaría demasiado tiempo. Sin embargo, con los valores actuales la tendencia debería notarse.
+\end{itemize}
+
+\subsubsection{Variación de Rangos de Productividad}
+
+Para probar la robustez de las soluciones, especialmente de las heurísticas Greedy, no bastaba con variar $n$. Por cada valor de $n$, se generaron 4 casos de prueba distintos (identificados con $i \in [0, 3]$ en el nombre \verb|testcases_{n}_{i}.txt|), cada uno con un "perfil" de productividad diferente:
+
+\begin{itemize}
+	\item \textbf{Perfil 0 (Largo Mixto)}: $A_i, B_i \in [-10^9, 10^9]$. Corresponde al rango completo especificado en el enunciado. Es el caso estándar.
+	
+	\item \textbf{Perfil 1 (Corto Mixto)}: $A_i, B_i \in [-100, 100]$. Un escenario con valores de productividad mucho menores, pero aún mixtos (positivos y negativos).
+	
+	\item \textbf{Perfil 2 (Corto Positivo)}: $A_i, B_i \in [1, 100]$. Un escenario de "solo ganancias", donde toda contribución es positiva. Esto podría alterar las decisiones de los algoritmos Greedy, al no tener que gestionar pérdidas.
+	
+	\item \textbf{Perfil 3 (A Garantizado Mejor)}: $A_i \in [1, 500]$ y $B_i \in [-500, 0]$. Este perfil impone la lógica de que usar el lenguaje favorito ($A_i$) es siempre una ganancia, y no hacerlo ($B_i$) es siempre una pérdida.
+\end{itemize}
+
+Combinando ambas variaciones, el dataset final consiste en $13 \text{ valores de } n \times 4 \text{ perfiles} = \textbf{52 \text{ casos de prueba}}$ en total. Este conjunto permite un análisis detallado tanto de la escalabilidad (vs. $n$) como de la calidad de la solución (vs. perfil de datos).

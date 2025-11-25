@@ -1,0 +1,177 @@
+\subsection{Pseudocódigos}
+
+\subsubsection{Backtracking}
+
+\begin{lstlisting}[caption={Algoritmo de Fuerza bruta}]
+	// Función recursiva de Backtracking
+	long long resolver_backtracking(const vector<Empleado>& empleados, int start, int n) {
+		// si ya cubrimos a todos los empleados (start == n), la productividad extra es 0
+		if (start == n) return 0; 
+		
+		long long mejor = LLONG_MIN;
+		
+		// Probar todos los posibles puntos de corte end desde start hasta el final
+		for (int end = start; end < n; end++) {
+			long long prod_segmento = productividad_equipo(empleados, start, end);
+			
+			long long total = prod_segmento + resolver_backtracking(empleados, end + 1, n);
+			mejor = max(mejor, total);
+		}
+		
+		return mejor;
+	}
+	
+	int calcular_productividad_total_backtracking(int n, vector<string> lineas) {
+		vector<Empleado> empleados;
+		empleados.reserve(n);
+		
+		// Leer la entrada
+		for (auto& linea : lineas) {
+			stringstream ss(linea);
+			long long A, B;
+			string C;
+			ss >> A >> B >> C;
+			empleados.push_back({A, B, C});
+		}
+		
+		// Iniciar la recursión desde el empleado 0
+		long long resultado = resolver_backtracking(empleados, 0, n);
+		return static_cast<int>(resultado);
+	}
+\end{lstlisting}
+
+\subsubsection{Greedy 1}
+
+\begin{lstlisting}[caption={Algoritmo Greedy con primera heurística}]
+int calcular_productividad_total_greedy1(int n, vector<string> lineas) {
+	vector<Empleado> empleados;
+	empleados.reserve(n);
+	
+	// leer la entrada
+	for (auto& linea : lineas) {
+		stringstream ss(linea);
+		long long A, B;
+		string C;
+		ss >> A >> B >> C;
+		empleados.push_back({A, B, C});
+	}
+	
+	long long productividad_total = 0;
+	int start = 0;
+	
+	// Iterar hasta agrupar a todos los empleados
+	while (start < n) {
+		long long mejor_prod_segmento = LLONG_MIN;
+		int mejor_end = start;
+		
+		// Búsqueda local, hay que probar todos los posibles finales para el segmento actual
+		// y quedarse con el que de el valor máximo absoluto
+		for (int end = start; end < n; end++) {
+			long long prod_actual = productividad_equipo(empleados, start, end);
+			
+			if (prod_actual > mejor_prod_segmento) {
+				mejor_prod_segmento = prod_actual;
+				mejor_end = end;
+			}
+		}
+		
+		// Acá está la decision greedy, confirmamos el segmento [start, mejor_end]
+		productividad_total += mejor_prod_segmento;
+		
+		// avanzar el inicio para el siguiente equipo
+		start = mejor_end + 1; 
+	}
+	
+	return static_cast<int>(productividad_total);
+}
+\end{lstlisting}
+
+\subsubsection{Greedy 2}
+
+\begin{lstlisting}[caption={Algoritmo Greedy con segunda heurística}]
+int calcular_productividad_total_greedy2(int n, vector<string> lineas) {
+	vector<Empleado> empleados;
+	empleados.reserve(n);
+	
+	// leer la entrada
+	for (auto& linea : lineas) {
+		stringstream ss(linea);
+		long long A, B;
+		string C;
+		ss >> A >> B >> C;
+		empleados.push_back({A, B, C});
+	}
+	
+	long long productividad_total = 0;
+	int start = 0;
+	
+	while (start < n) {
+		double mejor_densidad = -1e18; // Inicializar con un valor muy bajo
+		int mejor_end = start;
+		
+		// busqueda local
+		for (int end = start; end < n; end++) {
+			long long prod_actual = productividad_equipo(empleados, start, end);
+			int num_empleados = end - start + 1;
+			
+			// Criterio greedy: Productividad / Cantidad de empleados
+			double densidad_actual = static_cast<double>(prod_actual) / num_empleados;
+			
+			if (densidad_actual > mejor_densidad) {
+				mejor_densidad = densidad_actual;
+				mejor_end = end;
+			}
+		}
+		
+		// Recalculamos el valor real (entero) del mejor segmento encontrado para sumarlo al total
+		productividad_total += productividad_equipo(empleados, start, mejor_end);
+		start = mejor_end + 1; 
+	}
+	
+	return static_cast<int>(productividad_total);
+}
+\end{lstlisting}
+
+\subsubsection{Programación Dinámica}
+
+\begin{lstlisting}[caption={Algoritmo de Programación Dinámica}]
+int calcular_productividad_total_dp(int n, vector<string> lineas) {
+	vector<Empleado> empleados;
+	empleados.reserve(n);
+	
+	// leer entrada
+	for (auto& linea : lineas) {
+		stringstream ss(linea);
+		long long A, B;
+		string C;
+		ss >> A >> B >> C;
+		empleados.push_back({A, B, C});
+	}
+	
+	// Definición de estado
+	// dp[i] almacena la productividad máxima posible considerando SOLO los primeros i empleados
+	// El objetivo final es encontrar dp[n]
+	vector<long long> dp(n + 1);
+	
+	// El caso base sería que 0 empleados generan 0 productivdad
+	dp[0] = 0;
+	
+	// Llenado de la tabla Bottom-Up
+	for (int i = 1; i <= n; i++) {
+		dp[i] = LLONG_MIN; // Inicializar con un valor enano
+		
+		// Transición:
+		// Para calcular dp[i], probamos todos los posibles "últimos equipos" formados por el segmento [j, i-1]
+		// dp[i] será el maximo de (la solución óptima hasta j + lo que aporta el nuevo equipo [j, i-1])
+		for (int j = 0; j < i; j++) {
+			long long prod_ultimo_segmento = productividad_equipo(empleados, j, i - 1);
+			
+			if (dp[j] != LLONG_MIN) { // check de seguridad (aunque dp[0] en teoría siempre es válido)
+				dp[i] = max(dp[i], dp[j] + prod_ultimo_segmento);
+			}
+		}
+	}
+	
+	return static_cast<int>(dp[n]);
+}
+\end{lstlisting}

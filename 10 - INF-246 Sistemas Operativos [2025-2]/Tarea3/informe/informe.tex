@@ -1,0 +1,237 @@
+% PREAMBULO
+\documentclass[12pt, a4paper]{article}
+
+% PAQUETES
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2.5cm]{geometry} 
+\usepackage{graphicx} 
+\usepackage{amsmath} 
+\usepackage{float}
+
+% INFORMACION DEL DOCUMENTO 
+\title{Informe Laboratorio 3}
+\author{Alondra Acosta, Rol: 202273524-4 \\ 
+		Sergio Cárcamo, Rol: 202273512-0}
+\date{\today}
+
+% COMIENZO DEL DOCUMENTO
+\begin{document}
+
+\maketitle 
+%\tableofcontents 
+%\newpage 
+
+% CONTENIDO DEL INFORME
+
+\section{Introducción}
+
+El presente informe detalla el desarrollo del Laboratorio 3 para el curso de Sistemas Operativos \textbf{(INF246)}. El problema central consiste en encontrar el camino más corto dentro de un grafo ponderado, que simula la planificación de rutas en un volcán. Dado que analizar todas las combinaciones de rutas puede ser un proceso computacionalmente costoso, se requiere el uso de paralelismo.
+
+El objetivo de la tarea es implementar dos versiones del programa para resolver este problema y comparar su eficiencia. La primera versión se debe desarrollar en \textbf{C++}, utilizando la llamada al sistema \texttt{fork()} para la creación de procesos hijos y \texttt{pipes} para la comunicación entre ellos. La segunda versión se debe implementar en \textbf{Java}, empleando \texttt{threads} para la paralelización.
+
+Para ambas soluciones se utilizó el algoritmo de \textbf{Bellman-Ford}, como fue sugerido por el enunciado, permitiendo así una comparación justa del rendimiento de ambas estrategias. A continuación, se detallará el desarrollo de cada implementación y se presentará un análisis comparativo de los resultados obtenidos.
+
+
+\section{Desarrollo}
+% SECCION DE C++
+\subsection{Implementación en C++}
+
+Tal como se sugirió en el enunciado, se usó el algoritmo de \textbf{Bellman-Ford}.
+Este algoritmo sirve para encontrar las distancias más cortas desde un vértice origen a todos los demás en un grafo ponderado, incluso si hay pesos negativos (siempre que no existan ciclos negativos alcanzables).
+
+La paralelización se implementó usando la llamada al sistema \texttt{fork()} para crear procesos hijos, como se especificaba en los requisitos. Se genera un número de hijos igual al total de procesadores lógicos del sistema, obtenido mediante \texttt{sysconf(\_SC\_NPROCESSORS\_ONLN)}, en nuestro caso, $12$.
+
+La comunicación y sincronización entre el padre y los hijos se gestiona íntegramente con \texttt{pipes}. Por cada hijo, el padre crea dos canales de comunicación (pipes) dedicados:
+\begin{itemize}
+	\item Un pipe "Padre-a-Hijo" (P$\rightarrow$H), donde el padre escribe y el hijo lee.
+	\item Un pipe "Hijo-a-Padre" (H$\rightarrow$P), donde el hijo escribe y el padre lee.
+\end{itemize}
+
+El algoritmo opera en fases sincronizadas que se repiten $V$ veces (donde $V$ es el número de nodos):
+
+\begin{enumerate}
+	\item \textbf{Fase 1: Broadcast (Padre)}: El padre envía (escribe) el estado \textit{completo} y actual del arreglo de \texttt{distancias} a \textit{todos} sus hijos a través de sus respectivos pipes P$\rightarrow$ H.
+	
+	\item \textbf{Fase 2: Trabajo (Hijos)}: Cada hijo se bloquea (\texttt{read()}) esperando recibir el arreglo. Una vez recibido, itera sobre \textbf{su propio} subconjunto de aristas (el pedazo que el padre le asignó. Si un hijo encuentra una relajación (una ruta más corta), no la aplica; en su lugar, la añade a una lista local de propuestas (el struct \texttt{Actualizacion}).
+	
+	\item \textbf{Fase 3: Reporte (Hijos)}: Al terminar de revisar sus aristas, cada hijo le informa al padre cuántas actualizaciones encontró (escribiendo un \texttt{int}). Si este número es mayor a cero, procede a escribir el arreglo de sus \texttt{Actualizacion} propuestas en el pipe H->P.
+	
+	\item \textbf{Fase 4: Consolidación (Padre)}: El padre, en un bucle \textit{serial}, se bloquea leyendo (\texttt{read()}) los resultados de cada hijo. Recolecta todas las propuestas de todos los hijos y es el \textbf{único} responsable de consolidarlas, aplicando solo las mejores (las de menor distancia) a su arreglo maestro de \texttt{distancias}.
+\end{enumerate}
+
+Este ciclo de cuatro fases se repite hasta completar las $V$ iteraciones (necesario para detectar ciclos negativos) o hasta que una iteración completa no produce ningún cambio global (early exit).
+
+Al finalizar, el padre cierra los extremos de escritura de los pipes. Esto envía una señal EOF a los hijos que están bloqueados leyendo, indicándoles que deben terminar su bucle y salir. Finalmente, el padre ejecuta \texttt{waitpid()} por cada hijo para limpiar los procesos zombie y escribe el resultado final en \texttt{salidaFork.txt}.
+
+% SECCION DE JAVA
+\subsection{Implementación en Java}
+
+Para la versión en Java, se siguió la especificación de usar Threads para la paralelización. Se mantuvo el mismo algoritmo de \textbf{Bellman-Ford} para asegurar una comparación consistente.
+
+A diferencia de C++ (que usa memoria separada para cada proceso), en Java todas las hebras comparten el mismo espacio de memoria, lo que presenta un desafío de concurrencia para acceder a los arreglos compartidos de \texttt{distancias} y \texttt{predecesores}.
+
+La estrategia de paralelización fue similar a la de C++: el hilo principal ('main') divide la lista total de aristas y asigna un subconjunto a cada hilo 'Worker'. Se creó una clase interna \texttt{Worker} que implementa \texttt{Runnable}. El número de hebras se define dinámicamente según los procesadores disponibles \texttt{(Runtime.getRuntime().availableProcessors())}, en nuestro caso, $12$.
+
+Para evitar condiciones de carrera, se implementó un mecanismo de sincronización usando barreras (CyclicBarrier), tal como se sugería en el enunciado. El algoritmo opera en fases sincronizadas por dos barreras:
+
+\begin{itemize}
+	\item \textbf{Fase de Sincronización (Inicio)}: Todas las hebras (workers y main) deben llegar a la \texttt{startBarrier.await()}. Esto asegura que ningún hilo comience a trabajar hasta que todos estén listos para la iteración.
+	
+	\item \textbf{Fase de Trabajo (Paralela)}: Una vez liberados, cada hilo 'Worker' revisa su subconjunto de aristas. Leen del arreglo \texttt{distancias} compartido (lo cual es seguro) y, si encuentran una mejora, la guardan en una lista \textit{local} \texttt{(misActualizaciones)}, sin modificar aún el arreglo global.
+	
+	\item \textbf{Fase de Sincronización (Fin)}: Al terminar de revisar sus aristas, todas las hebras (workers y main) esperan en la \texttt{endBarrier.await()}.
+	
+	\item \textbf{Fase de Consolidación (Serial)}: Una vez que todos los workers han llegado a la barrera final, el hilo 'main' se activa. Este hilo es el \textbf{único} que tiene permiso para escribir en los arreglos compartidos. Recorre las listas \texttt{misActualizaciones} de todos los workers y aplica las mejoras en \texttt{distancias} y \texttt{predecesores}.
+\end{itemize}
+
+Este ciclo (Inicio $\rightarrow$ Trabajo $\rightarrow$ Fin $\rightarrow$ Consolidación) se repite $V$ veces (o se detiene antes si no hay cambios). Este enfoque garantiza que nunca ocurran escrituras concurrentes en la memoria compartida.
+
+Finalmente, el hilo principal espera que todos los workers terminen (join()) y escribe los resultados en el archivo \texttt{salidaThread.txt}.
+
+\subsection{Entorno de implementación y pruebas}
+Las implementaciones y pruebas de los programas se realizaron bajo dos equipos distintos. Siendo la especificación tecnica de ellos, detallada a continuación:
+
+\vspace{10 pt}
+\textbf{Computador 1 - Implementación Java}
+\begin{itemize}
+	\item Procesador: 13th Gen Intel(R) Core(TM) i5-1335U, 1300 MHz (1.30 GHz) base, 10 procesadores
+principales, 12 procesadores lógicos.
+	\item Memoria RAM: 16,0 GB.
+	\item Almacenamiento: SSD NVMe, marca SAMSUNG MZVL41T0HBLB-00B, con una capacidad total de
+954 GB.
+	\item Sistema operativo: Ubuntu 22.04.5 LTS
+	\item Compilador: g++ 11.4.0
+	\item Arquitectura x64 bits
+\end{itemize} 
+ 
+\textbf{Computador 2 - Implementación C++}
+\begin{itemize}
+	\item Procesador: 13th Gen Intel(R) Core(TM) i5-1335U, 1300 MHz (1.30 GHz) base, 10 procesadores
+principales, 12 procesadores lógicos.
+	\item Memoria RAM: 16,0 GB.
+	\item Almacenamiento: SSD NVMe, marca Micron MTFDKBA512QGN-1BN1AABGA, con una capacidad total de
+512 GB.
+	\item Sistema operativo: Ubuntu 24.04.3 LTS (WSL2) bajo Microsoft Windows 11 Enterprise IoT LTSC
+	\item Compilador: g++ 11.4.0
+	\item Arquitectura x64 bits
+\end{itemize} 
+
+% Comparación
+\subsection{Comparación de Resultados}
+
+Una vez obtenidos los datos, podemos generar gráficos usando el script \textbf{script$\_$plots.py}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{../codigo/data/plots/1_nodos_vs_tiempo.png}
+	\caption{Comparación de Nodos vs Tiempo de ejecución}
+	\label{fig:nodos_vs_tiempo}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{../codigo/data/plots/2_aristas_vs_tiempo.png}
+	\caption{Comparación de Aristas vs Tiempo de ejecución}
+	\label{fig:aristas_vs_tiempo}
+\end{figure}
+
+Como podemos ver en los gráficos 1 y 2, que comparan el tiempo de ejecución (eje X) contra el tamaño del problema, emerge una tendencia clara a pesar de la variabilidad en los datos.
+
+En ambos gráficos, la línea azul (\textbf{C++ (fork)}) se mantiene consistentemente a la izquierda de la línea naranja (\textbf{Java (threads)}) para un tamaño de problema similar. Esto indica que, para un grafo con una cantidad dada de nodos o aristas, la implementación en C++ con \texttt{fork()} logra completar el cálculo en un \textbf{tiempo de ejecución menor} que la implementación en Java con \texttt{threads}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{../codigo/data/plots/3_uso_cpu.png}
+	\caption{Comparación uso de CPU}
+	\label{fig:uso_cpu}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{../codigo/data/plots/4_uso_ram.png}
+	\caption{Comparación uso de memoria RAM}
+	\label{fig:uso_ram}
+\end{figure}
+
+Luego, al analizar el uso de recursos, las diferencias se vuelven aún más evidentes.
+
+El gráfico 3 muestra el uso promedio de CPU. Aquí, Java (threads) registra un uso de CPU ligeramente \textit{mayor} (aprox. 79\%) que C++ (fork) (aprox. 67\%). Esto es notable porque, a pesar de usar más recursos de CPU, Java obtuvo un rendimiento en tiempo \textit{inferior}. Esto sugiere que una parte significativa de ese uso de CPU en Java se debe a la sobrecarga (overhead) del propio entorno de ejecución (la JVM), su recolector de basura (Garbage Collector) y la gestión de la sincronización de hebras (barreras). \\
+
+Finalmente, el gráfico 4 presenta la diferencia más drástica: el \textbf{Uso Máximo de RAM}. La versión de \textbf{Java (threads) consume $\approx 125$ MiB} de RAM, mientras que la versión de \textbf{C++ (fork) utiliza una fracción de eso, $\approx 4-5$ MiB}. \\
+
+Esta diferencia abismal se debe a dos factores fundamentales:
+\begin{itemize}
+	\item \textbf{Java (threads)}: Las hebras se ejecutan dentro de la Máquina Virtual de Java (JVM). El alto consumo de memoria no proviene de las hebras en sí, sino de la propia JVM, que debe cargar el entorno de ejecución, el compilador JIT (Just-In-Time) y el recolector de basura, reservando un espacio de memoria (heap) considerable antes de ejecutar la primera línea del programa.
+	\item \textbf{C++ (fork)}: Los procesos creados con \texttt{fork()} en sistemas operativos modernos (como Linux) se benefician enormemente de la optimización \textbf{Copy-on-Write (CoW)}. Esto significa que, al hacer \texttt{fork()}, el hijo no duplica inmediatamente toda la memoria del padre. En su lugar, comparte las páginas de memoria del padre. Solo si el hijo intenta \textit{escribir} en una de esas páginas, el kernel crea una copia privada de esa página específica. Dado que nuestros hijos pasan la mayor parte del tiempo \textit{leyendo} los datos del grafo y solo escriben pequeños mensajes de actualización a través de los \texttt{pipes}, la duplicación de memoria real es mínima, resultando en un uso de RAM extremadamente eficiente.
+\end{itemize}
+
+En resumen, los datos muestran que la implementación de C++ (fork) superó a Java (threads) en todas las métricas clave: fue \textbf{significativamente más rápida} y consumió \textbf{drásticamente menos memoria RAM}.
+
+% Preguntas del enunciado
+\section{Preguntas de análisis}
+
+\begin{itemize}
+	\item \textbf{¿Cuál de las dos implementaciones tuvo un mejor rendimiento en términos de tiempo de ejecución? ¿A qué crees que se debe esto?}
+	
+	\textbf{Respuesta}: La implementación en \textbf{C++ (fork)} tuvo un rendimiento en tiempo de ejecución significativamente mejor. Como se observa en las Figuras \ref{fig:nodos_vs_tiempo} y \ref{fig:aristas_vs_tiempo}, para un mismo tamaño de grafo (misma cantidad de nodos o aristas), la línea azul de C++ se ubica consistentemente en un tiempo de ejecución menor (más a la izquierda) que la línea naranja de Java.
+	
+	Esto se debe a varias razones: 
+	\begin{itemize}
+		\item \textbf{Sobrecarga (Overhead) de Ejecución}: C++ se compila a código máquina nativo, que se ejecuta directamente por el SO. Java se ejecuta sobre la Máquina Virtual de Java (JVM), la cual introduce una capa de abstracción que consume más tiempo tiempo (compilación JIT), gestión de memoria (Garbage Collector) y arranque.
+		\item \textbf{Eficiencia del Modelo de Procesos}: Aunque \texttt{fork()} es conceptualmente "pesado", los sistemas operativos modernos como Linux (que es el que nos piden en enunciado) usan \textbf{Copy-on-Write (CoW)}. Esto significa que la memoria no se duplica al crear un hijo, sino que se comparte. La duplicación solo ocurre si un hijo \textit{escribe} en una página de memoria. Dado que nuestro algoritmo es principalmente de lectura (los hijos solo leen el grafo y escriben pequeñas actualizaciones en un pipe), la penalización de \texttt{fork()} es mínima.
+		\item \textbf{Sincronización}: La implementación de Java utiliza \texttt{CyclicBarrier}, que fuerza a todas las hebras a detenerse y esperar en dos puntos por cada iteración del algoritmo. Esta sobrecarga de sincronización, aunque necesaria para la correctitud, suma un costo de espera en cada una de las $V$ iteraciones.
+	\end{itemize}
+	
+	\item \textbf{¿Se observó alguna diferencia significativa en el uso de recursos del sistema (CPU, RAM) entre ambas soluciones?}
+	
+	\textbf{Respuesta}: Sí, las diferencias fueron extremadamente significativas, como se ilustra en las Figuras \ref{fig:uso_cpu} y \ref{fig:uso_ram}.
+	\begin{itemize}
+		\item \textbf{RAM}: La diferencia es drástica. Java (threads) consumió $\approx 125$ MiB de RAM, mientras que C++ (fork) usó menos de 5 MiB. Esto se debe a que el consumo de Java está dominado por la \textbf{JVM}, que reserva un gran espacio de memoria (heap) para su funcionamiento y el Garbage Collector. En contraste, el bajo consumo de C++ demuestra la eficiencia de la optimización \textbf{Copy-on-Write (CoW)} explicada en la pregunta anterior.
+		\item \textbf{CPU}: Curiosamente, Java utilizó \textit{más} CPU (aprox. 79\%) que C++ (aprox. 67\%), a pesar de ser más lento. Esto sugiere que un porcentaje considerable del uso de CPU de Java se destina a tareas de \textit{overhead} (como el GC y la compilación JIT) y no directamente al cómputo del algoritmo Bellman-Ford.
+	\end{itemize}
+	
+	\item \textbf{¿En qué escenarios consideras más adecuado el uso de procesos (forks) frente a hilos (threads)?}
+	
+	\textbf{Respuesta}: La elección depende de la necesidad de aislamiento frente a la necesidad de comunicación:
+	
+	\textbf{Usar Procesos (forks) es más adecuado para:}
+	\begin{itemize}
+		\item \textbf{Aislamiento y Robustez}: Cuando las tareas son independientes y la falla de una (un crasheo) no debe afectar a las demás. Un ejemplo clásico es un servidor web que crea un proceso por cada solicitud de cliente.
+		\item \textbf{Seguridad}: Cuando se necesita ejecutar código que no es de confianza o que debe tener privilegios separados, ya que el espacio de memoria aislado del proceso actúa como una barrera de seguridad.
+		\item \textbf{Tareas de Lectura-Intensiva)}: Como se demostró en este laboratorio, si las tareas paralelas principalmente leen de un gran conjunto de datos común, la optimización Copy-on-Write hace que \texttt{fork()} sea extremadamente eficiente en memoria. 
+	\end{itemize}
+	
+	\textbf{Usar Hilos/Hebras (threads) es más adecuado para:}
+	\begin{itemize}
+		\item \textbf{Comunicación Intensiva}: Cuando las tareas paralelas necesitan compartir y \textit{modificar frecuentemente} grandes estructuras de datos. La memoria compartida por defecto de las hebras es mucho más rápida para esto que los pipes o sockets.
+		\item \textbf{Alto Paralelismo de E/S}: En escenarios donde se necesita gestionar miles de conexiones simultáneas (ej. un servidor de chat) que pasan la mayor parte del tiempo bloqueadas esperando datos. Crear un proceso por cada conexión sería inviable.
+		\item \textbf{Creación y Destrucción Rápida}: Las hebras son más ligeros y rápidos de crear y destruir que los procesos (incluso con CoW).
+	\end{itemize}
+	
+	
+	\item \textbf{¿Qué estrategias de optimización aplicarías al programa con menor rendimiento para que iguale o supere la eficiencia del programa mejor evaluado?}
+	
+	\textbf{Respuesta}: El programa con menor rendimiento fue el de \textbf{Java (threads)}. El principal cuello de botella es el modelo de sincronización: (trabajo paralelo) $\rightarrow$ (barrera) $\rightarrow$ (consolidación serial por main) $\rightarrow$ (barrera). Para optimizarlo, podríamos:
+	
+	\begin{itemize}
+		\item \textbf{Usar Operaciones Atómicas (Lock-Free)}: En lugar de usar barreras y una fase de consolidación serial, podríamos usar un \texttt{AtomicLongArray} para las \texttt{distancias}. Las hebras intentarían actualizar las distancias de forma concurrente usando operaciones \texttt{compareAndSet()}. Esto eliminaría el cuello de botella serial, ya que todas las hebras podrían leer y escribir al mismo tiempo sin bloquearse, aunque complicaría significativamente la lógica para detectar el fin de una iteración y los ciclos negativos.
+		
+		\item \textbf{Reducir la Presión sobre el Garbage Collector (GC)}: En la implementación actual, se crea un nuevo objeto \texttt{Actualizacion} (un \texttt{record}) por cada mejora encontrada en cada iteración. En grafos densos, esto podría generar millones de objetos pequeños, forzando al GC a trabajar constantemente (aumentando el uso de CPU y pausas). Una optimización sería usar "pools" de objetos o arrays de tipos primitivos para comunicar las actualizaciones, evitando la creación de nuevos objetos dentro del bucle principal.
+		
+		\item \textbf{Tuning de la JVM}: A un nivel más avanzado, se podría experimentar con los parámetros de la JVM, como el tipo de Garbage Collector (ej. usar G1GC o ZGC para pausas más cortas) o los tamaños de memoria (-Xms, -Xmx), para ajustar el rendimiento a la carga de trabajo específica del algoritmo Bellman-Ford.
+	\end{itemize}
+	
+\end{itemize}
+
+% Conclusión
+\section{Conclusión}
+
+Los resultados de las pruebas fueron concluyentes: la implementación en \textbf{C++ utilizando procesos (\texttt{fork})} demostró ser superior a la implementación en \textbf{Java con hebras (\texttt{threads})} en todas las métricas evaluadas. La versión en C++ fue significativamente más rápida en tiempo de ejecución y consumió una fracción de la memoria RAM.
+
+La eficiencia de C++ se atribuye a su compilación a código nativo y, fundamentalmente, a la optimización \textbf{Copy-on-Write (CoW)} del sistema operativo al gestionar los procesos hijos. Por el contrario, el rendimiento de Java se vio penalizado por la sobrecarga inherente de la Máquina Virtual de Java (JVM), su recolector de basura, y la gestión de la sincronización de hebras.
+
+Concluimos que, para este problema de cómputo intensivo con datos compartidos que son principalmente de lectura, el modelo de paralelismo basado en procesos con \texttt{fork()} resultó ser una solución mucho más eficiente que el modelo basado en hebras.
+
+% FIN DEL DOCUMENTO 
+\end{document}

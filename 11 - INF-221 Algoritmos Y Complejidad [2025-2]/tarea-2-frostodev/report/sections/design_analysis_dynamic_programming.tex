@@ -1,0 +1,44 @@
+\subsubsection{Explicación}
+
+La Programación Dinámica (DP) es una técnica que permite encontrar la solución óptima, al igual que la fuerza bruta, pero de manera mucho más eficiente. Resuelve el problema de la fuerza bruta, que recalcula la solución para los mismos subproblemas (por ejemplo, la partición óptima de los empleados $[i, n-1]$) múltiples veces. La DP descompone el problema en subproblemas más pequeños, almacena sus resultados en una tabla y los reutiliza. Esto se conoce como superposición de subproblemas y subestructura óptima. La solución óptima para los $n$ empleados se puede construir a partir de las soluciones óptimas para $k < n$ empleados.
+
+\paragraph{Relación de recurrencia:}
+
+Definimos un estado $DP[i]$ como la máxima productividad total que se puede obtener al formar equipos usando exactamente los primeros $i$ empleados (es decir, los empleados en los índices $0$ a $i-1$). Nuestro objetivo final es encontrar $DP[n]$. Para calcular $DP[i]$, debemos decidir cuál fue el último equipo. Este último equipo debe ser un segmento $[j, i-1]$, donde $j$ puede ser cualquier valor desde $0$ hasta $i-1$. \\
+
+Si el último equipo es $[j, i-1]$, entonces la productividad total será la suma de:
+
+\begin{itemize}
+	\item La productividad de ese último equipo: \texttt{productividad\_equipo(j, i-1)}.
+	\item La productividad óptima de todos los empleados antes de ese equipo (de $0$ a $j-1$), que ya tenemos calculada y almacenada en $DP[j]$.
+\end{itemize}
+
+Como queremos maximizar la productividad, probamos todas las posiciones $j$ posibles para el inicio del último segmento y nos quedamos con la mejor. Entonces, a relación de recurrencia es:
+$$
+DP[i] = \max_{0 \le j < i} \{ DP[j] + \texttt{productividad\_equipo}(j, i-1) \}
+$$
+
+\paragraph{Estructura de datos y orden de cálculo:}
+
+Se utiliza un arreglo (vector) unidimensional, $dp$, de tamaño $n+1$, donde $dp[i]$ almacenará el valor de $DP[i]$. En cuanto a la orden de cálculo, para calcular $dp[i]$, necesitamos conocer todos los valores $dp[j]$ donde $j < i$. Por lo tanto, debemos llenar la tabla $dp$ en orden ascendente (método bottom-up), comenzando por el caso base $dp[0]$ y calculando $dp[1], dp[2], \dots,$ hasta $dp[n]$. \\
+
+\noindent \textbf{El pseudocódigo para este algoritmo está en el apéndice.}
+
+\subsubsection{Complejidad Temporal}
+
+El algoritmo consta de dos bucles anidados:
+
+\begin{itemize}
+	\item El bucle externo itera $i$ desde $1$ hasta $n$, $O(n)$ veces.
+	\item El bucle interno itera $j$ desde $0$ hasta $i-1$, $O(i)$ veces, que en el peor caso es $O(n)$.
+\end{itemize}
+
+Dentro del bucle interno, se llama a la función \texttt{productividad\_equipo(j, i-1)}. Esta función, como se analizó en las secciones anteriores, itera sobre los $i-j$ elementos del segmento, tomando $O(i-j)$ tiempo, que en el peor caso es $O(n)$.
+
+Dado que tenemos tres niveles de dependencia anidada ($O(n) \times O(n) \times O(n)$), la complejidad temporal total es $O(n^3)$. Esto es una mejora exponencial sobre la fuerza bruta ($O(n \cdot 2^n)$) y coincide con la complejidad de las heurísticas greedy implementadas.
+
+\subsubsection{Complejidad Espacial}
+
+La estructura de datos principal que se almacena es el vector $dp$ de tamaño $n+1$. Por lo tanto, la complejidad espacial es $O(n)$. \\
+
+\textbf{Nota}: Aunque cada llamada a \texttt{productividad\_equipo} usa $O(n)$ de espacio temporal para sus mapas, este espacio se libera al retornar y no se acumula, por lo que el espacio persistente del algoritmo sigue siendo $O(n)$.

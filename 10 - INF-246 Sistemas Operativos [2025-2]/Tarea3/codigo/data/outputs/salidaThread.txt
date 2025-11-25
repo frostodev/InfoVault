@@ -1,0 +1,800 @@
+
+★Resultados para data/inputs/grafo_1.txt★
+Grafo de 5 nodos. Ruta de 0 a 4.
+Resultado: Éxito
+Distancia más corta: 81
+Camino: 0 -> 1 -> 4
+Tiempo de ejecución (12 threads): 8.1086 ms.
+
+
+★Resultados para data/inputs/grafo_10.txt★
+Grafo de 8 nodos. Ruta de 3 a 4.
+Resultado: Éxito
+Distancia más corta: 90
+Camino: 3 -> 7 -> 6 -> 4
+Tiempo de ejecución (12 threads): 6.0097 ms.
+
+
+★Resultados para data/inputs/grafo_100.txt★
+Grafo de 18 nodos. Ruta de 2 a 9.
+Resultado: Éxito
+Distancia más corta: 890
+Camino: 2 -> 12 -> 3 -> 0 -> 16 -> 8 -> 4 -> 6 -> 11 -> 5 -> 1 -> 13 -> 17 -> 7 -> 15 -> 14 -> 10 -> 9
+Tiempo de ejecución (12 threads): 11.8449 ms.
+
+
+★Resultados para data/inputs/grafo_11.txt★
+Grafo de 16 nodos. Ruta de 5 a 9.
+Resultado: Éxito
+Distancia más corta: 353
+Camino: 5 -> 6 -> 10 -> 0 -> 2 -> 14 -> 11 -> 7 -> 9
+Tiempo de ejecución (12 threads): 8.4502 ms.
+
+
+★Resultados para data/inputs/grafo_12.txt★
+Grafo de 16 nodos. Ruta de 11 a 12.
+Resultado: Éxito
+Distancia más corta: 181
+Camino: 11 -> 9 -> 5 -> 15 -> 2 -> 12
+Tiempo de ejecución (12 threads): 11.6268 ms.
+
+
+★Resultados para data/inputs/grafo_13.txt★
+Grafo de 17 nodos. Ruta de 0 a 13.
+Resultado: Éxito
+Distancia más corta: 117
+Camino: 0 -> 7 -> 8 -> 10 -> 11 -> 16 -> 13
+Tiempo de ejecución (12 threads): 4.8229 ms.
+
+
+★Resultados para data/inputs/grafo_14.txt★
+Grafo de 15 nodos. Ruta de 6 a 10.
+Resultado: Éxito
+Distancia más corta: 76
+Camino: 6 -> 8 -> 10
+Tiempo de ejecución (12 threads): 4.3121 ms.
+
+
+★Resultados para data/inputs/grafo_15.txt★
+Grafo de 10 nodos. Ruta de 2 a 8.
+Resultado: Éxito
+Distancia más corta: 110
+Camino: 2 -> 1 -> 8
+Tiempo de ejecución (12 threads): 5.0628 ms.
+
+
+★Resultados para data/inputs/grafo_16.txt★
+Grafo de 9 nodos. Ruta de 8 a 5.
+Resultado: Éxito
+Distancia más corta: 202
+Camino: 8 -> 7 -> 4 -> 6 -> 5
+Tiempo de ejecución (12 threads): 2.8443 ms.
+
+
+★Resultados para data/inputs/grafo_17.txt★
+Grafo de 7 nodos. Ruta de 6 a 3.
+Resultado: Éxito
+Distancia más corta: 193
+Camino: 6 -> 4 -> 2 -> 0 -> 3
+Tiempo de ejecución (12 threads): 2.4578 ms.
+
+
+★Resultados para data/inputs/grafo_18.txt★
+Grafo de 10 nodos. Ruta de 4 a 6.
+Resultado: Éxito
+Distancia más corta: 51
+Camino: 4 -> 6
+Tiempo de ejecución (12 threads): 2.8605 ms.
+
+
+★Resultados para data/inputs/grafo_19.txt★
+Grafo de 9 nodos. Ruta de 5 a 2.
+Resultado: Éxito
+Distancia más corta: 238
+Camino: 5 -> 7 -> 8 -> 2
+Tiempo de ejecución (12 threads): 2.7069 ms.
+
+
+★Resultados para data/inputs/grafo_2.txt★
+Grafo de 9 nodos. Ruta de 1 a 6.
+Resultado: Éxito
+Distancia más corta: 6
+Camino: 1 -> 6
+Tiempo de ejecución (12 threads): 2.6238 ms.
+
+
+★Resultados para data/inputs/grafo_20.txt★
+Grafo de 14 nodos. Ruta de 4 a 5.
+Resultado: Éxito
+Distancia más corta: 51
+Camino: 4 -> 0 -> 8 -> 5
+Tiempo de ejecución (12 threads): 3.2763 ms.
+
+
+★Resultados para data/inputs/grafo_21.txt★
+Grafo de 16 nodos. Ruta de 1 a 13.
+Resultado: Éxito
+Distancia más corta: 100
+Camino: 1 -> 13
+Tiempo de ejecución (12 threads): 5.6421 ms.
+
+
+★Resultados para data/inputs/grafo_22.txt★
+Grafo de 10 nodos. Ruta de 5 a 3.
+Resultado: Éxito
+Distancia más corta: 68
+Camino: 5 -> 3
+Tiempo de ejecución (12 threads): 5.6140 ms.
+
+
+★Resultados para data/inputs/grafo_23.txt★
+Grafo de 14 nodos. Ruta de 4 a 5.
+Resultado: Éxito
+Distancia más corta: 76
+Camino: 4 -> 5
+Tiempo de ejecución (12 threads): 6.7419 ms.
+
+
+★Resultados para data/inputs/grafo_24.txt★
+Grafo de 9 nodos. Ruta de 8 a 1.
+Resultado: Éxito
+Distancia más corta: 55
+Camino: 8 -> 5 -> 1
+Tiempo de ejecución (12 threads): 2.1539 ms.
+
+
+★Resultados para data/inputs/grafo_25.txt★
+Grafo de 15 nodos. Ruta de 13 a 0.
+Resultado: Éxito
+Distancia más corta: 132
+Camino: 13 -> 6 -> 0
+Tiempo de ejecución (12 threads): 11.3244 ms.
+
+
+★Resultados para data/inputs/grafo_26.txt★
+Grafo de 18 nodos. Ruta de 8 a 1.
+Resultado: Éxito
+Distancia más corta: 112
+Camino: 8 -> 17 -> 1
+Tiempo de ejecución (12 threads): 2.4615 ms.
+
+
+★Resultados para data/inputs/grafo_27.txt★
+Grafo de 7 nodos. Ruta de 2 a 0.
+Resultado: Éxito
+Distancia más corta: 320
+Camino: 2 -> 3 -> 1 -> 4 -> 6 -> 0
+Tiempo de ejecución (12 threads): 9.6602 ms.
+
+
+★Resultados para data/inputs/grafo_28.txt★
+Grafo de 10 nodos. Ruta de 3 a 6.
+Resultado: Éxito
+Distancia más corta: 91
+Camino: 3 -> 7 -> 6
+Tiempo de ejecución (12 threads): 7.0172 ms.
+
+
+★Resultados para data/inputs/grafo_29.txt★
+Grafo de 10 nodos. Ruta de 8 a 9.
+Resultado: Éxito
+Distancia más corta: 92
+Camino: 8 -> 7 -> 9
+Tiempo de ejecución (12 threads): 4.4894 ms.
+
+
+★Resultados para data/inputs/grafo_3.txt★
+Grafo de 6 nodos. Ruta de 5 a 4.
+Resultado: Éxito
+Distancia más corta: 46
+Camino: 5 -> 2 -> 0 -> 4
+Tiempo de ejecución (12 threads): 6.3956 ms.
+
+
+★Resultados para data/inputs/grafo_30.txt★
+Grafo de 9 nodos. Ruta de 5 a 2.
+Resultado: Éxito
+Distancia más corta: 99
+Camino: 5 -> 8 -> 1 -> 2
+Tiempo de ejecución (12 threads): 2.9840 ms.
+
+
+★Resultados para data/inputs/grafo_31.txt★
+Grafo de 17 nodos. Ruta de 7 a 4.
+Resultado: Éxito
+Distancia más corta: 89
+Camino: 7 -> 1 -> 9 -> 4
+Tiempo de ejecución (12 threads): 3.2502 ms.
+
+
+★Resultados para data/inputs/grafo_32.txt★
+Grafo de 9 nodos. Ruta de 6 a 7.
+Resultado: Éxito
+Distancia más corta: 85
+Camino: 6 -> 5 -> 7
+Tiempo de ejecución (12 threads): 2.3977 ms.
+
+
+★Resultados para data/inputs/grafo_33.txt★
+Grafo de 16 nodos. Ruta de 11 a 0.
+Resultado: Éxito
+Distancia más corta: 67
+Camino: 11 -> 5 -> 1 -> 0
+Tiempo de ejecución (12 threads): 3.9052 ms.
+
+
+★Resultados para data/inputs/grafo_34.txt★
+Grafo de 8 nodos. Ruta de 7 a 4.
+Resultado: Éxito
+Distancia más corta: 237
+Camino: 7 -> 5 -> 0 -> 6 -> 3 -> 4
+Tiempo de ejecución (12 threads): 4.5250 ms.
+
+
+★Resultados para data/inputs/grafo_35.txt★
+Grafo de 14 nodos. Ruta de 5 a 2.
+Resultado: Éxito
+Distancia más corta: 102
+Camino: 5 -> 7 -> 3 -> 8 -> 2
+Tiempo de ejecución (12 threads): 4.6594 ms.
+
+
+★Resultados para data/inputs/grafo_36.txt★
+Grafo de 16 nodos. Ruta de 4 a 6.
+Resultado: Éxito
+Distancia más corta: 206
+Camino: 4 -> 9 -> 0 -> 6
+Tiempo de ejecución (12 threads): 6.1733 ms.
+
+
+★Resultados para data/inputs/grafo_37.txt★
+Grafo de 15 nodos. Ruta de 12 a 5.
+Resultado: Éxito
+Distancia más corta: 137
+Camino: 12 -> 13 -> 11 -> 9 -> 10 -> 5
+Tiempo de ejecución (12 threads): 7.4445 ms.
+
+
+★Resultados para data/inputs/grafo_38.txt★
+Grafo de 16 nodos. Ruta de 12 a 15.
+Resultado: Éxito
+Distancia más corta: 42
+Camino: 12 -> 13 -> 15
+Tiempo de ejecución (12 threads): 5.0402 ms.
+
+
+★Resultados para data/inputs/grafo_39.txt★
+Grafo de 14 nodos. Ruta de 0 a 12.
+Resultado: Éxito
+Distancia más corta: 10
+Camino: 0 -> 12
+Tiempo de ejecución (12 threads): 5.8635 ms.
+
+
+★Resultados para data/inputs/grafo_4.txt★
+Grafo de 12 nodos. Ruta de 10 a 8.
+Resultado: Éxito
+Distancia más corta: 412
+Camino: 10 -> 9 -> 7 -> 5 -> 3 -> 2 -> 8
+Tiempo de ejecución (12 threads): 10.3166 ms.
+
+
+★Resultados para data/inputs/grafo_40.txt★
+Grafo de 8 nodos. Ruta de 6 a 4.
+Resultado: Éxito
+Distancia más corta: 79
+Camino: 6 -> 1 -> 3 -> 2 -> 4
+Tiempo de ejecución (12 threads): 4.9029 ms.
+
+
+★Resultados para data/inputs/grafo_41.txt★
+Grafo de 17 nodos. Ruta de 14 a 4.
+Resultado: Éxito
+Distancia más corta: 124
+Camino: 14 -> 6 -> 4
+Tiempo de ejecución (12 threads): 4.9111 ms.
+
+
+★Resultados para data/inputs/grafo_42.txt★
+Grafo de 5 nodos. Ruta de 0 a 3.
+Resultado: Éxito
+Distancia más corta: 109
+Camino: 0 -> 1 -> 2 -> 3
+Tiempo de ejecución (12 threads): 2.0487 ms.
+
+
+★Resultados para data/inputs/grafo_43.txt★
+Grafo de 16 nodos. Ruta de 8 a 3.
+Resultado: Éxito
+Distancia más corta: 190
+Camino: 8 -> 4 -> 15 -> 7 -> 11 -> 5 -> 0 -> 3
+Tiempo de ejecución (12 threads): 7.7182 ms.
+
+
+★Resultados para data/inputs/grafo_44.txt★
+Grafo de 5 nodos. Ruta de 0 a 3.
+Resultado: Éxito
+Distancia más corta: 20
+Camino: 0 -> 3
+Tiempo de ejecución (12 threads): 1.2608 ms.
+
+
+★Resultados para data/inputs/grafo_45.txt★
+Grafo de 17 nodos. Ruta de 7 a 5.
+Resultado: Éxito
+Distancia más corta: 887
+Camino: 7 -> 4 -> 1 -> 8 -> 0 -> 9 -> 10 -> 14 -> 15 -> 3 -> 16 -> 6 -> 13 -> 5
+Tiempo de ejecución (12 threads): 13.8759 ms.
+
+
+★Resultados para data/inputs/grafo_46.txt★
+Grafo de 8 nodos. Ruta de 7 a 5.
+Resultado: Éxito
+Distancia más corta: 229
+Camino: 7 -> 3 -> 6 -> 2 -> 5
+Tiempo de ejecución (12 threads): 2.5285 ms.
+
+
+★Resultados para data/inputs/grafo_47.txt★
+Grafo de 7 nodos. Ruta de 3 a 4.
+Resultado: Éxito
+Distancia más corta: 93
+Camino: 3 -> 4
+Tiempo de ejecución (12 threads): 2.8899 ms.
+
+
+★Resultados para data/inputs/grafo_48.txt★
+Grafo de 16 nodos. Ruta de 12 a 5.
+Resultado: Éxito
+Distancia más corta: 4
+Camino: 12 -> 5
+Tiempo de ejecución (12 threads): 2.5904 ms.
+
+
+★Resultados para data/inputs/grafo_49.txt★
+Grafo de 12 nodos. Ruta de 4 a 9.
+Resultado: Éxito
+Distancia más corta: 41
+Camino: 4 -> 9
+Tiempo de ejecución (12 threads): 2.6687 ms.
+
+
+★Resultados para data/inputs/grafo_5.txt★
+Grafo de 14 nodos. Ruta de 7 a 10.
+Resultado: Éxito
+Distancia más corta: 186
+Camino: 7 -> 5 -> 13 -> 3 -> 0 -> 10
+Tiempo de ejecución (12 threads): 7.0758 ms.
+
+
+★Resultados para data/inputs/grafo_50.txt★
+Grafo de 13 nodos. Ruta de 11 a 0.
+Resultado: Éxito
+Distancia más corta: 52
+Camino: 11 -> 0
+Tiempo de ejecución (12 threads): 2.9111 ms.
+
+
+★Resultados para data/inputs/grafo_51.txt★
+Grafo de 9 nodos. Ruta de 8 a 4.
+Resultado: Éxito
+Distancia más corta: 135
+Camino: 8 -> 5 -> 0 -> 4
+Tiempo de ejecución (12 threads): 4.7864 ms.
+
+
+★Resultados para data/inputs/grafo_52.txt★
+Grafo de 17 nodos. Ruta de 2 a 6.
+Resultado: Éxito
+Distancia más corta: 36
+Camino: 2 -> 12 -> 1 -> 6
+Tiempo de ejecución (12 threads): 2.6590 ms.
+
+
+★Resultados para data/inputs/grafo_53.txt★
+Grafo de 7 nodos. Ruta de 1 a 4.
+Resultado: Éxito
+Distancia más corta: 165
+Camino: 1 -> 6 -> 5 -> 0 -> 4
+Tiempo de ejecución (12 threads): 4.7456 ms.
+
+
+★Resultados para data/inputs/grafo_54.txt★
+Grafo de 15 nodos. Ruta de 9 a 6.
+Resultado: Éxito
+Distancia más corta: 91
+Camino: 9 -> 13 -> 7 -> 6
+Tiempo de ejecución (12 threads): 6.5648 ms.
+
+
+★Resultados para data/inputs/grafo_55.txt★
+Grafo de 11 nodos. Ruta de 9 a 7.
+Resultado: Éxito
+Distancia más corta: 73
+Camino: 9 -> 5 -> 7
+Tiempo de ejecución (12 threads): 2.9060 ms.
+
+
+★Resultados para data/inputs/grafo_56.txt★
+Grafo de 16 nodos. Ruta de 3 a 5.
+Resultado: Éxito
+Distancia más corta: 95
+Camino: 3 -> 6 -> 5
+Tiempo de ejecución (12 threads): 4.1158 ms.
+
+
+★Resultados para data/inputs/grafo_57.txt★
+Grafo de 10 nodos. Ruta de 7 a 2.
+Resultado: Éxito
+Distancia más corta: 44
+Camino: 7 -> 2
+Tiempo de ejecución (12 threads): 2.5414 ms.
+
+
+★Resultados para data/inputs/grafo_58.txt★
+Grafo de 10 nodos. Ruta de 1 a 5.
+Resultado: Éxito
+Distancia más corta: 89
+Camino: 1 -> 5
+Tiempo de ejecución (12 threads): 2.4343 ms.
+
+
+★Resultados para data/inputs/grafo_59.txt★
+Grafo de 17 nodos. Ruta de 11 a 9.
+Resultado: Éxito
+Distancia más corta: 176
+Camino: 11 -> 12 -> 5 -> 7 -> 9
+Tiempo de ejecución (12 threads): 3.4713 ms.
+
+
+★Resultados para data/inputs/grafo_6.txt★
+Grafo de 13 nodos. Ruta de 2 a 1.
+Resultado: Éxito
+Distancia más corta: 164
+Camino: 2 -> 4 -> 0 -> 12 -> 1
+Tiempo de ejecución (12 threads): 2.9774 ms.
+
+
+★Resultados para data/inputs/grafo_60.txt★
+Grafo de 14 nodos. Ruta de 8 a 7.
+Resultado: Éxito
+Distancia más corta: 20
+Camino: 8 -> 7
+Tiempo de ejecución (12 threads): 2.3275 ms.
+
+
+★Resultados para data/inputs/grafo_61.txt★
+Grafo de 15 nodos. Ruta de 13 a 0.
+Resultado: Éxito
+Distancia más corta: 40
+Camino: 13 -> 0
+Tiempo de ejecución (12 threads): 5.2250 ms.
+
+
+★Resultados para data/inputs/grafo_62.txt★
+Grafo de 14 nodos. Ruta de 4 a 1.
+Resultado: Éxito
+Distancia más corta: 401
+Camino: 4 -> 6 -> 13 -> 12 -> 2 -> 9 -> 0 -> 5 -> 8 -> 1
+Tiempo de ejecución (12 threads): 5.2673 ms.
+
+
+★Resultados para data/inputs/grafo_63.txt★
+Grafo de 9 nodos. Ruta de 2 a 3.
+Resultado: Éxito
+Distancia más corta: 76
+Camino: 2 -> 3
+Tiempo de ejecución (12 threads): 5.7071 ms.
+
+
+★Resultados para data/inputs/grafo_64.txt★
+Grafo de 18 nodos. Ruta de 0 a 16.
+Resultado: Éxito
+Distancia más corta: 467
+Camino: 0 -> 2 -> 14 -> 3 -> 15 -> 5 -> 8 -> 1 -> 16
+Tiempo de ejecución (12 threads): 4.7883 ms.
+
+
+★Resultados para data/inputs/grafo_65.txt★
+Grafo de 10 nodos. Ruta de 5 a 9.
+Resultado: Éxito
+Distancia más corta: 131
+Camino: 5 -> 6 -> 0 -> 9
+Tiempo de ejecución (12 threads): 2.5564 ms.
+
+
+★Resultados para data/inputs/grafo_66.txt★
+Grafo de 7 nodos. Ruta de 2 a 6.
+Resultado: Éxito
+Distancia más corta: 79
+Camino: 2 -> 1 -> 0 -> 6
+Tiempo de ejecución (12 threads): 2.7273 ms.
+
+
+★Resultados para data/inputs/grafo_67.txt★
+Grafo de 18 nodos. Ruta de 0 a 12.
+Resultado: Éxito
+Distancia más corta: 156
+Camino: 0 -> 3 -> 9 -> 12
+Tiempo de ejecución (12 threads): 2.7529 ms.
+
+
+★Resultados para data/inputs/grafo_68.txt★
+Grafo de 16 nodos. Ruta de 13 a 9.
+Resultado: Éxito
+Distancia más corta: 202
+Camino: 13 -> 10 -> 12 -> 4 -> 0 -> 9
+Tiempo de ejecución (12 threads): 4.7351 ms.
+
+
+★Resultados para data/inputs/grafo_69.txt★
+Grafo de 10 nodos. Ruta de 0 a 2.
+Resultado: Éxito
+Distancia más corta: 22
+Camino: 0 -> 2
+Tiempo de ejecución (12 threads): 4.8403 ms.
+
+
+★Resultados para data/inputs/grafo_7.txt★
+Grafo de 18 nodos. Ruta de 14 a 16.
+Resultado: Éxito
+Distancia más corta: 130
+Camino: 14 -> 5 -> 16
+Tiempo de ejecución (12 threads): 8.4863 ms.
+
+
+★Resultados para data/inputs/grafo_70.txt★
+Grafo de 14 nodos. Ruta de 10 a 6.
+Resultado: Éxito
+Distancia más corta: 50
+Camino: 10 -> 3 -> 0 -> 1 -> 9 -> 6
+Tiempo de ejecución (12 threads): 7.4606 ms.
+
+
+★Resultados para data/inputs/grafo_71.txt★
+Grafo de 6 nodos. Ruta de 0 a 4.
+Resultado: Éxito
+Distancia más corta: 98
+Camino: 0 -> 5 -> 3 -> 4
+Tiempo de ejecución (12 threads): 5.0079 ms.
+
+
+★Resultados para data/inputs/grafo_72.txt★
+Grafo de 9 nodos. Ruta de 4 a 3.
+Resultado: Éxito
+Distancia más corta: 141
+Camino: 4 -> 1 -> 3
+Tiempo de ejecución (12 threads): 4.5268 ms.
+
+
+★Resultados para data/inputs/grafo_73.txt★
+Grafo de 6 nodos. Ruta de 1 a 0.
+Resultado: Éxito
+Distancia más corta: 61
+Camino: 1 -> 0
+Tiempo de ejecución (12 threads): 4.9972 ms.
+
+
+★Resultados para data/inputs/grafo_74.txt★
+Grafo de 6 nodos. Ruta de 4 a 3.
+Resultado: Éxito
+Distancia más corta: 47
+Camino: 4 -> 3
+Tiempo de ejecución (12 threads): 2.9082 ms.
+
+
+★Resultados para data/inputs/grafo_75.txt★
+Grafo de 8 nodos. Ruta de 5 a 3.
+Resultado: Éxito
+Distancia más corta: 82
+Camino: 5 -> 3
+Tiempo de ejecución (12 threads): 1.4962 ms.
+
+
+★Resultados para data/inputs/grafo_76.txt★
+Grafo de 14 nodos. Ruta de 8 a 10.
+Resultado: Éxito
+Distancia más corta: 98
+Camino: 8 -> 10
+Tiempo de ejecución (12 threads): 3.2881 ms.
+
+
+★Resultados para data/inputs/grafo_77.txt★
+Grafo de 16 nodos. Ruta de 2 a 9.
+Resultado: Éxito
+Distancia más corta: 39
+Camino: 2 -> 8 -> 9
+Tiempo de ejecución (12 threads): 4.7653 ms.
+
+
+★Resultados para data/inputs/grafo_78.txt★
+Grafo de 6 nodos. Ruta de 4 a 2.
+Resultado: Éxito
+Distancia más corta: 133
+Camino: 4 -> 5 -> 2
+Tiempo de ejecución (12 threads): 1.9685 ms.
+
+
+★Resultados para data/inputs/grafo_79.txt★
+Grafo de 5 nodos. Ruta de 3 a 1.
+Resultado: Éxito
+Distancia más corta: 66
+Camino: 3 -> 1
+Tiempo de ejecución (12 threads): 1.4312 ms.
+
+
+★Resultados para data/inputs/grafo_8.txt★
+Grafo de 10 nodos. Ruta de 2 a 8.
+Resultado: Éxito
+Distancia más corta: 216
+Camino: 2 -> 5 -> 3 -> 0 -> 9 -> 8
+Tiempo de ejecución (12 threads): 3.0166 ms.
+
+
+★Resultados para data/inputs/grafo_80.txt★
+Grafo de 15 nodos. Ruta de 4 a 0.
+Resultado: Éxito
+Distancia más corta: 97
+Camino: 4 -> 0
+Tiempo de ejecución (12 threads): 2.1752 ms.
+
+
+★Resultados para data/inputs/grafo_81.txt★
+Grafo de 10 nodos. Ruta de 2 a 7.
+Resultado: Éxito
+Distancia más corta: 69
+Camino: 2 -> 7
+Tiempo de ejecución (12 threads): 3.7015 ms.
+
+
+★Resultados para data/inputs/grafo_82.txt★
+Grafo de 11 nodos. Ruta de 7 a 0.
+Resultado: Éxito
+Distancia más corta: 129
+Camino: 7 -> 6 -> 10 -> 8 -> 0
+Tiempo de ejecución (12 threads): 2.2236 ms.
+
+
+★Resultados para data/inputs/grafo_83.txt★
+Grafo de 12 nodos. Ruta de 5 a 3.
+Resultado: Éxito
+Distancia más corta: 12
+Camino: 5 -> 3
+Tiempo de ejecución (12 threads): 2.9226 ms.
+
+
+★Resultados para data/inputs/grafo_84.txt★
+Grafo de 9 nodos. Ruta de 4 a 0.
+Resultado: Éxito
+Distancia más corta: 68
+Camino: 4 -> 0
+Tiempo de ejecución (12 threads): 2.4805 ms.
+
+
+★Resultados para data/inputs/grafo_85.txt★
+Grafo de 7 nodos. Ruta de 1 a 2.
+Resultado: Éxito
+Distancia más corta: 124
+Camino: 1 -> 4 -> 0 -> 2
+Tiempo de ejecución (12 threads): 2.1733 ms.
+
+
+★Resultados para data/inputs/grafo_86.txt★
+Grafo de 13 nodos. Ruta de 11 a 12.
+Resultado: Éxito
+Distancia más corta: 124
+Camino: 11 -> 9 -> 10 -> 12
+Tiempo de ejecución (12 threads): 2.4203 ms.
+
+
+★Resultados para data/inputs/grafo_87.txt★
+Grafo de 8 nodos. Ruta de 4 a 7.
+Resultado: Éxito
+Distancia más corta: 28
+Camino: 4 -> 7
+Tiempo de ejecución (12 threads): 2.4266 ms.
+
+
+★Resultados para data/inputs/grafo_88.txt★
+Grafo de 9 nodos. Ruta de 0 a 6.
+Resultado: Éxito
+Distancia más corta: 109
+Camino: 0 -> 1 -> 6
+Tiempo de ejecución (12 threads): 2.3982 ms.
+
+
+★Resultados para data/inputs/grafo_89.txt★
+Grafo de 14 nodos. Ruta de 10 a 3.
+Resultado: Éxito
+Distancia más corta: 113
+Camino: 10 -> 1 -> 6 -> 3
+Tiempo de ejecución (12 threads): 2.3351 ms.
+
+
+★Resultados para data/inputs/grafo_9.txt★
+Grafo de 15 nodos. Ruta de 4 a 11.
+Resultado: Éxito
+Distancia más corta: 83
+Camino: 4 -> 11
+Tiempo de ejecución (12 threads): 3.2217 ms.
+
+
+★Resultados para data/inputs/grafo_90.txt★
+Grafo de 13 nodos. Ruta de 5 a 7.
+Resultado: Éxito
+Distancia más corta: 109
+Camino: 5 -> 10 -> 11 -> 7
+Tiempo de ejecución (12 threads): 2.7163 ms.
+
+
+★Resultados para data/inputs/grafo_91.txt★
+Grafo de 16 nodos. Ruta de 6 a 10.
+Resultado: Éxito
+Distancia más corta: 73
+Camino: 6 -> 15 -> 12 -> 9 -> 10
+Tiempo de ejecución (12 threads): 9.4022 ms.
+
+
+★Resultados para data/inputs/grafo_92.txt★
+Grafo de 6 nodos. Ruta de 3 a 1.
+Resultado: Éxito
+Distancia más corta: 82
+Camino: 3 -> 1
+Tiempo de ejecución (12 threads): 1.8690 ms.
+
+
+★Resultados para data/inputs/grafo_93.txt★
+Grafo de 9 nodos. Ruta de 3 a 5.
+Resultado: Éxito
+Distancia más corta: 82
+Camino: 3 -> 5
+Tiempo de ejecución (12 threads): 4.6047 ms.
+
+
+★Resultados para data/inputs/grafo_94.txt★
+Grafo de 18 nodos. Ruta de 7 a 8.
+Resultado: Éxito
+Distancia más corta: 97
+Camino: 7 -> 17 -> 9 -> 12 -> 8
+Tiempo de ejecución (12 threads): 3.5116 ms.
+
+
+★Resultados para data/inputs/grafo_95.txt★
+Grafo de 18 nodos. Ruta de 3 a 9.
+Resultado: Éxito
+Distancia más corta: 167
+Camino: 3 -> 11 -> 10 -> 1 -> 9
+Tiempo de ejecución (12 threads): 2.6753 ms.
+
+
+★Resultados para data/inputs/grafo_96.txt★
+Grafo de 10 nodos. Ruta de 8 a 6.
+Resultado: Éxito
+Distancia más corta: 45
+Camino: 8 -> 6
+Tiempo de ejecución (12 threads): 2.6573 ms.
+
+
+★Resultados para data/inputs/grafo_97.txt★
+Grafo de 13 nodos. Ruta de 2 a 12.
+Resultado: Éxito
+Distancia más corta: 273
+Camino: 2 -> 8 -> 9 -> 1 -> 7 -> 12
+Tiempo de ejecución (12 threads): 3.0363 ms.
+
+
+★Resultados para data/inputs/grafo_98.txt★
+Grafo de 12 nodos. Ruta de 2 a 7.
+Resultado: Éxito
+Distancia más corta: 112
+Camino: 2 -> 0 -> 10 -> 7
+Tiempo de ejecución (12 threads): 2.2931 ms.
+
+
+★Resultados para data/inputs/grafo_99.txt★
+Grafo de 7 nodos. Ruta de 2 a 4.
+Resultado: Éxito
+Distancia más corta: 198
+Camino: 2 -> 0 -> 5 -> 6 -> 4
+Tiempo de ejecución (12 threads): 2.4913 ms.
+

@@ -1,0 +1,2 @@
+naive: 0.0029068 segundos, 0 KB de memoria
+strassen: 0.266317 segundos, -4860 KB de memoria

@@ -1,0 +1,34 @@
+\subsubsection{Algoritmo Greedy 1}
+
+Para este problema, el enfoque \textbf{Greedy} consiste en pararse en el primer empleado disponible (start) y decidir dónde \textbf{cortar} para formar el primer equipo. Una vez que se forma el equipo $[$start, end$]$, el proceso se repite desde end + 1 hasta que todos los empleados estén en un equipo. La diferencia entre las dos heurísticas implementadas radica en el criterio para elegir el punto de corte \textbf{end}.
+
+\paragraph{Explicación y pseudocódigo:}
+
+Esta heurística se basa en la decisión localmente óptima más simple: en cada paso, formar el equipo que, por sí solo, genere la mayor productividad posible. El algoritmo comienza en start = 0. Itera probando todos los end posibles (desde start hasta $n-1$) y calcula la productividad del segmento $[$start, end$]$. Elige el mejor\_end que maximiza este valor. Luego, añade esa productividad al total y repite el proceso comenzando desde mejor\_end + 1.
+
+\paragraph{Complejidad Temporal:}
+
+El algoritmo tiene un bucle mientras que avanza el puntero start. En el peor de los casos, start avanza solo de uno en uno (si el mejor segmento es siempre de tamaño 1), ejecutándose $n$ veces. Dentro de este bucle, hay un bucle para que itera end desde start hasta $n-1$, $O(n)$ veces. Dentro de ese bucle, se llama a \texttt{productividad\_equipo(start, end)}, que, como vimos, toma $O($end - start + 1$)$ = $O(n)$ en el peor caso.
+La estructura es un bucle anidado (el mientras que avanza start y el para que avanza end) que en total definen $O(n^2)$ pares de $($start, end$)$ a probar. Para cada par, se hace un cálculo de $O(n)$.
+Por lo tanto, la complejidad temporal total es $O(n^3)$.
+
+\paragraph{Complejidad Espacial:}
+
+El algoritmo almacena el vector de empleados, que ocupa $O(n)$. La función \texttt{productividad\_equipo} utiliza mapas y vectores auxiliares que en el peor caso pueden ocupar $O(n)$ si todos los empleados tienen lenguajes distintos. No hay recursión. La complejidad espacial es $O(n)$. \\
+
+\subsection{Algoritmo Greedy 2}
+
+\paragraph{Explicación:}
+
+Esta segunda heurística utiliza un criterio Greedy más sofisticado. En lugar de maximizar la productividad absoluta del segmento (lo que podría favorecer segmentos muy largos), busca maximizar la productividad promedio por empleado (densidad). La lógica es idéntica a Greedy 1, pero la decisión de mejor\_end se toma calculando la \textbf{densidad} como la prod\_actual dividido en número de empleados en el segmento. Se elige el mejor\_end que maximiza esta métrica.
+
+\paragraph{Complejidad Temporal:}
+
+El análisis es idéntico al de Greedy 1. La estructura de bucles anidados y la llamada a \texttt{productividad\_equipo} son las mismas. El cálculo de la densidad (una división) es una operación $O(1)$ que no cambia el orden de complejidad.
+La complejidad temporal total entonces es $O(n^3)$.
+
+\paragraph{Complejidad Espacial:}
+
+El análisis es idéntico al de Greedy 1. Se necesita $O(n)$ para almacenar los empleados y $O(n)$ para las estructuras auxiliares dentro de \texttt{productividad\_equipo}. La complejidad espacial es $O(n)$. \\
+
+\noindent \textbf{El pseudocódigo para ambos algoritmos está en el apéndice.}

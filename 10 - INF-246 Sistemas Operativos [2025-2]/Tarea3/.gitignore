@@ -1,0 +1,14 @@
+# archivos extra de LaTeX
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.toc
+
+
+# clases compiladas de java
+*.class
+
+# ejecutable compilado de C++
+lab3

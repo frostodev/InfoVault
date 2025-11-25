@@ -1,0 +1,61 @@
+Los resultados de mediciones de tiempo y memoria para ambos experimentos se realizaron durante la ejecución, guardando los datos en el directorio `data/measurements` correspondiente a cada experimento.
+
+En una buena porción de los experimentos, la memoria utilizada por cada algoritmo es demasiado pequeña para ser medida eficazmente. Debido a ello, algunas mediciones reportan 0 KB. Sin embargo, debido a la escala de los gráficos generados, no se presentan incosistencias mayores.
+
+Para una visualización más directa y comprensible de los resultados, se generan gráficos usando las librerías \textbf{pandas} y \textbf{matplotlib} de Python. Se debe considerar que los gráficos usan \textbf{escala logarítmica}.
+
+\newpage
+
+Comenzando con el análisis de algoritmos de ordenamiento, se generan tres gráficos, cada uno correspondiente al tipo de arreglo de entrada (ascendiente, descendiente, aleatorio). Estos son los resultados:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../code/sorting/data/plots/tiempo_vs_n_ascendente.png}
+	\caption{Medición de tiempos de ordenamiento de arreglo ascendente}
+	\label{fig:ascendente}
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../code/sorting/data/plots/tiempo_vs_n_descendente.png}
+	\caption{Medición de tiempos de ordenamiento de arreglo descendente}
+	\label{fig:descendente}
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../code/sorting/data/plots/tiempo_vs_n_aleatorio.png}
+	\caption{Medición de tiempos de ordenamiento de arreglo aleatorio}
+	\label{fig:aleatorio}
+\end{figure}
+
+\newpage
+Debemos considerar además que en el caso de \textbf{Insertion Sort}, la cantidad de datos se truncó a 500.000 elementos, debido a que considerando su complejidad teórica cuadrática y el hardware actual, se tomaría varios días en ordenar un único arreglo.
+
+En un análisis visual inmediato, podemos observar que para tamaños pequeños de arreglos el tiempo de ejecución es prácticamente despreciable, con valores menores a \textbf{0.1s} en la mayoría de arreglos de tamaño $10^4$. Por otro lado para arreglos de gran tamaño los tiempos de ejecución crecen de forma significativa conforme el tamaño del arreglo aumenta.
+
+En un análisis más profundo, podemos notar que los gráficos respetan en términos generales las complejidades teóricas de cada algoritmo, correspondiente a los casos mejor, peor y promedio (ascendente, descendente y aleatorio respectivamente). \\
+
+Ahora, para el análisis de algoritmos de multiplicación de matrices, generamos dos gráficos, uno combinando la complejidad temporal de ambos algoritmos y comparándola con la teórica, y el otro mostrando el uso de memoria (se debe considerar $n$ como el tamaño/cantidad de filas/columnas):
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../code/matrix_multiplication/data/plots/tiempo_ejecucion.png}
+	\caption{Medición de tiempos de multiplicación de matrices de ambos algoritmos}
+	\label{fig:naive}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../code/matrix_multiplication/data/plots/uso_memoria.png}
+	\caption{Comparación uso de memoria en ambos algoritmos}
+	\label{fig:strassen}
+\end{figure}
+
+Podemos notar que ambos algoritmos respetan en gran medida su complejidad teórica. Sin embargo, el algoritmo \textbf{Strassen}, según los resultados de este expermiento, parece ser menos eficiente en terminos generales que el algoritmo Naive. \\
+
+Esto es debido a que la implementación actual de Strassen genera una sobrecarga (overhead) excesivo, pues para matrices más pequeñas se recomienda utilizar Naive, y como este algoritmo es de tipo \textbf{dividir y conquistar}, siempre se llegará a aplicar recursivamente el algoritmo a matrices pequeñas. \\
+
+Esta ineficiencia (en este caso particular) es por diseño, pues el propósito de este reporte es estudiar la complejidad para una implementación "pura" de Strassen, que no tenga que recurrir a Naive para las submatrices pequeñas.

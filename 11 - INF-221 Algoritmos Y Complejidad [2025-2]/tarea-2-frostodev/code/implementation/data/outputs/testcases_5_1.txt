@@ -1,0 +1,4 @@
+Backtracking: 24
+Greedy (primera heurística): 2
+Greedy (segunda heurística): 2
+Programación dinámica: 24

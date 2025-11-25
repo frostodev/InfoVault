@@ -1,0 +1,14 @@
+El \textbf{Análisis y Diseño de Algoritmos} es un pilar fundamental de las Ciencias de la Computación, enfocado en el desarrollo y estudio de métodos eficientes para resolver problemas computacionales. Una clase importante de estos son los problemas de optimización, donde se busca encontrar la mejor solución entre un vasto conjunto de posibilidades. Frecuentemente, un mismo problema de optimización puede ser abordado mediante distintas estrategias o paradigmas algorítmicos (como fuerza bruta, programación dinámica o heurísticas greedy), cada uno con diferentes perfiles de rendimiento y garantías de optimalidad.
+
+Este informe aborda un problema de optimización específico, presentado en el contexto de la empresa CppCorp. El desafío consiste en maximizar la productividad total de la compañía dividiendo a sus empleados, organizados en una fila, en equipos que corresponden a segmentos contiguos no vacíos. La productividad de cada equipo se define por una regla que depende del lenguaje de programación más frecuente entre sus miembros . Este escenario define un problema de partición óptima, donde encontrar la solución global requiere evaluar de forma inteligente las sub-particiones que la componen.
+
+
+El objetivo principal de este trabajo es implementar y comparar cuatro enfoques distintos para resolver dicho problema. Acorde a los objetivos de la Tarea 2, se busca \textbf{comparar diferentes técnicas de resolución de un mismo problema}, evaluando su tiempo de ejecución y uso de memoria. Las implementaciones desarrolladas abarcan:
+
+\begin{itemize}
+	\item Un algoritmo de Fuerza Bruta (mediante backtracking) que explora el espacio completo de soluciones.
+	\item Una solución óptima eficiente mediante Programación Dinámica.
+	\item Dos heurísticas Greedy subóptimas, diseñadas para encontrar soluciones rápidas pero no necesariamente óptimas.
+\end{itemize}
+
+La pregunta que guía este informe es: \textbf{¿Cuál es el costo computacional (en tiempo y memoria) de garantizar la optimalidad (Fuerza Bruta, DP) frente a la eficiencia de una solución aproximada (Greedy) para este problema de partición?} El aporte de este trabajo radica en el análisis experimental de estas implementaciones, midiendo su rendimiento en diversos casos de prueba. Adicionalmente, se analizará la calidad de las soluciones greedy para "determinar qué tan cercanas están al resultado óptimo", ilustrando así el balance fundamental entre eficiencia y optimalidad en el diseño de algoritmos.

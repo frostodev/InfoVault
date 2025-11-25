@@ -1,0 +1,35 @@
+La venta (18683024-5.#78Z->Manufacter-1.x0.8) genera un ciclo. 
+12893004-3 ya se encuentra en la linea de producción 
+No se pudo crear conexión, no existe tal M-8
+VER EMPRESA: 
+- M5
+- 19001277-8
+- [
+#901A-$600-estrellitas
+]
+VER EMPRESA: 
+- Manufacter-3
+- 20012447-2
+- [
+#79TR-$900-plastico
+#9CTR-$800.690-envases-plasticos
+]
+BUSCAR MP: 
+- M 4, 8688823-8
+- [
+#5AB-$50.301-circuitos-verdes Manufacter-1
+#79TR-$900-plastico Manufacter-3
+] 
+BUSCAR MP: 
+- M-7-0, 12893004-3
+- [
+#78C-$6.320-chips-md60 Manufacter-1
+] 
+La empresa 9141434-1 ya es productor de MP 
+VER VENTAS: 
+- Manufacter-1
+- 9141434-1
+- [
+#5AB-$50.301-circuitos-verdes x5.6 $281685 -> Manufacter-2
+#78C-$6.320-chips-md60 x9.0 $56880 -> M-6
+]

@@ -1,0 +1,4 @@
+hola
+m9-0.22485756-k.[#MAT1-$666.001-rubic-1x1]
+(M9.#MAT1->M 4.x1.0)
+VER EMPRESA Manufacter-3

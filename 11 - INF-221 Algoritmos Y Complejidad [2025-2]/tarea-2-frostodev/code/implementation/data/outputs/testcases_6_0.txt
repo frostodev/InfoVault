@@ -1,0 +1,4 @@
+Backtracking: 963648017
+Greedy (primera heurística): 618171408
+Greedy (segunda heurística): 618171408
+Programación dinámica: 963648017

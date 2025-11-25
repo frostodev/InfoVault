@@ -1,0 +1,22 @@
+{% extends "solvit/main.html" %}
+<title>SolvOn</title>
+
+{% block page_content %}
+<style type="text/css">
+  body {
+    overflow:hidden;
+  }
+</style>
+<body>
+  <img src="https://user-images.githubusercontent.com/114670136/195219569-a3737cc5-b31e-498d-91ec-26e1be531b23.png" width="492" height="208">
+    <p>¡Bienvenidos a SolvOn, un sitio web desarrollado por <em>El Equipo de SolvOn</em>!</p>
+  <h2>Contenido Dinámico</h2>
+    <p>La página actualmente contiene lo siguiente en la base de datos:</p>
+    <ul>
+      <li><strong>Cantidad de Semestres:</strong> {{ num_semesters }}</li>
+      <li><strong>Cantidad de Ramos:</strong> {{ num_courses }}</li>
+      <li><strong>Cantidad de Materias:</strong> {{ num_topics }}</li>
+    </ul>
+</body>
+
+{% endblock %}

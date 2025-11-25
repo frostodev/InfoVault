@@ -1,0 +1,8 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Introducción}{2}{section.1}%
+\contentsline {section}{\numberline {2}Implementaciones}{3}{section.2}%
+\contentsline {section}{\numberline {3}Experimentos}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Dataset (casos de prueba)}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Resultados}{5}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Conclusiones}{10}{section.4}%
+\contentsline {section}{\numberline {A}Apéndice 1}{11}{appendix.Alph1}%

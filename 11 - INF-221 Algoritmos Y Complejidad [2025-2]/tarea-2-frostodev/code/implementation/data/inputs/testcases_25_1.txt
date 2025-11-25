@@ -1,0 +1,26 @@
+25
+41 26 prolog
+-40 83 cpp
+-75 -78 cpp
+-53 -54 prolog
+-40 -37 c
+52 70 scheme
+82 31 c
+96 -53 java
+-26 90 java
+81 100 cpp
+-82 -23 scheme
+92 6 cpp
+-67 -41 c
+-91 -100 c
+-4 4 scheme
+-94 -27 cpp
+-75 -39 scheme
+-93 63 java
+5 -66 prolog
+-40 -73 c
+21 -89 cpp
+35 43 prolog
+96 -51 scheme
+63 63 c
+83 32 scheme

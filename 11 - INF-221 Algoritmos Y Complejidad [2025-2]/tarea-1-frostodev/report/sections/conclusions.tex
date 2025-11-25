@@ -1,0 +1,21 @@
+Para finalizar, los resultados de este estudio experimental permiten concluir que la \textbf{eficiencia práctica} de cada algoritmo depende no solo de su complejidad teórica o de la implementación, sino también (y de manera crucial) de las \textbf{características de la entrada}, confirmando así la hipótesis inicial de que existe una \textbf{elección ideal} del algoritmo según el contexto de uso.
+
+En el caso de los algoritmos de \textbf{ordenamiento}, se observa que:
+
+\begin{itemize}
+	\item \textbf{MergeSort} y \textbf{std::sort} demuestran robustez y eficiencia consistente en todos los órdenes iniciales, con un comportamiento cercano a \(O(n \log n)\).
+	\item \textbf{QuickSort}, aunque eficiente en promedio, confirma su sensibilidad a la elección del pivote, degradándose a \(O(n^2)\) en el peor caso (entrada descendente), a menos que se use una estrategia avanzada de selección.
+	\item \textbf{InsertionSort} resulta competitivo para entradas pequeñas o casi ordenadas (\(O(n)\)), pero su ineficiencia en casos promedio y peores casos (\(O(n^2)\)) lo limita severamente.
+	\item \textbf{PandaSort}, aunque de orden superior teórico (\(O(n \sqrt{n})\)), mostró un comportamiento interesante en ciertos escenarios, lo que sugiere que su diseño merece un análisis más profundo en futuros trabajos.
+\end{itemize}
+
+Respecto a la \textbf{multiplicación de matrices}:
+
+\begin{itemize}
+	\item El algoritmo \textbf{Naive} confirmó su complejidad cúbica \(O(n^3)\) en todos los casos, siendo simple pero costoso para dimensiones grandes.
+	\item \textbf{Strassen}, con complejidad \(O(n^{\log_2 7})\), mostró ventajas claras para matrices de gran tamaño, aunque con \textit{overhead} constante que lo hace menos eficiente para matrices pequeñas.
+\end{itemize}
+
+Estos resultados refuerzan la importancia del \textbf{análisis experimental} como complemento al teórico, permitiendo validar, contrastar y contextualizar el comportamiento de los algoritmos bajo condiciones reales. Además, se destaca la relevancia de considerar no solo el tiempo de ejecución, sino también el uso de memoria y las particularidades de la implementación.
+
+En síntesis, la elección del algoritmo debe basarse en un equilibrio entre su garantía teórica, su adaptabilidad al tipo de entrada, y los recursos computacionales disponibles. Esta tarea constituye un primer paso en el desarrollo de criterios fundados para la selección informada de algoritmos en aplicaciones prácticas.

@@ -1,0 +1,54 @@
+
+Basado en los resultados obtenidos de las mediciones temporales, junto a los resultados de productividad calculados por cada algoritmo, podemos derivar los siguientes gráficos, usando el script \textbf{plot$\_$generator.py}:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{../code/implementation/data/plots/tiempo_vs_n_todos_log.png}
+	\caption{Tiempo de Ejecución vs cantidad de empleados}
+	\label{fig:uso_cpu}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{../code/implementation/data/plots/memoria_vs_n_todos_log.png}
+	\caption{Uso de memoria vs cantidad de empleados}
+	\label{fig:uso_ram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{../code/implementation/data/plots/calidad_scatter.png}
+	\caption{Scatterplot comparativo para calidad de solución}
+	\label{fig:resultados_scatterplot}
+\end{figure}
+
+Al analizar los gráficos de rendimiento en escala Log-Log (Figura 1 y Figura 2), podemos extraer conclusiones claras sobre el costo computacional de cada enfoque.
+
+\subsubsection{Tiempo de ejecución}
+
+El gráfico de tiempo de ejecución confirma dramáticamente las complejidades teóricas.
+
+\begin{itemize}
+	\item \textbf{Backtracking (Fuerza Bruta)}: La línea azul muestra un crecimiento que no es lineal en la escala Log-Log, sino que se curva bruscamente hacia arriba. Esto es la firma de una complejidad exponencial. El algoritmo se vuelve intratable rápidamente, y los experimentos se detienen alrededor de $n=30$, golpeando el muro exponencial esperado. Más allá de ese valor, al volverse inviable, no se probó usando este algoritmo.
+	
+	\item \textbf{DP y Greedy}: Las otras tres implementaciones (DP, Greedy 1, Greedy 2) son drásticamente más rápidas. Sus líneas son rectas en la escala Log-Log, confirmando su naturaleza polinomial (analizada como $O(n^3)$). Para valores de $n$ donde Backtracking ya es inviable ($n=30$), estos algoritmos terminan en menos de un segundo.
+\end{itemize}
+
+\subsubsection{Uso de Memoria}
+
+\begin{itemize}
+	\item \textbf{Backtracking y Heurísticas Greedy}: Las líneas azul (Backtracking), naranja (Greedy 1) y verde (Greedy 2) son casi indistinguibles. Muestran una línea recta con pendiente suave, consistente con una complejidad espacial lineal ($O(n)$)
+	
+	\item \textbf{Programación Dinámica}: La línea roja (DP) es la atípica. No solo consume más memoria base, sino que su pendiente en la gráfica Log-Log es visiblemente más pronunciada. Esto sugiere una complejidad espacial polinomial de orden superior (p.ej., $O(n^2)$), lo cual se alinea con una de las conclusiones clave del informe: \textbf{DP consume una gran cantidad de memoria}.
+\end{itemize}
+
+\subsubsection{Análisis de Calidad de Solución}
+
+El rendimiento no lo es todo; la solución debe ser correcta. La Figura 3 compara la productividad obtenida por las heurísticas (eje Y) contra la solución óptima verdadera obtenida por DP/Backtracking (eje X).
+
+\begin{itemize}
+	\item \textbf{La línea punteada (x = y)} representa una solución perfecta (obtenida mediante DP y Backtracking, cuyas producciones calculadas son idénticas en cada caso de prueba).
+	\item Como se observa en el gráfico, \textbf{casi ningún punto reposa sobre la línea}. Esto prueba experimentalmente la conclusión de que \textbf{Greedy no siempre llega a la solución correcta}.
+	\item Más importante aún, los puntos (tanto de Greedy 1 como de Greedy 2) están extremadamente dispersos y, a menudo, muy lejos de la línea óptima. Por ejemplo, para una solución óptima de $1.5 x 10^9$, una heurística puede devolver $-1.7 x 10^9$.
+	\item Esto responde a la pregunta de investigación: las heurísticas greedy implementadas \textbf{no son cercanas al óptimo}, para este problema, sus decisiones locales no logran capturar la estructura de la solución global y entregan resultados muy poco fiables (obviamente depende de las heurísticas elegidas, otras heurísticas pueden comportarse mejor o peor).
+\end{itemize}
